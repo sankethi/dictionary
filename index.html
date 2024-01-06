@@ -1,0 +1,1360 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+  <script src="http://code.jquery.com/jquery-3.6.0.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+  <script src="http://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+  <script src="http://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
+
+  <link href='http://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet'> 
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="Language.css">
+  <script src = "data.js"> </script>
+
+</head>
+
+<title>Sanketi website (ಸಂಕೇತಿ ಜಾಲತಾಣ)</title>
+
+<body>
+
+<nav>
+<div class="tab" id="tab">
+  <button class="tablinks" id="defaultOpen" onclick="openTab(event, 'Language')">Language</button> 
+</div>
+<div class="loader" id = 'load'> 
+    <div id='spinner'>
+      <p  class='spinnerText' id='spinnerText1'>Loading</p>
+      <p  class='spinnerText' id='spinnerText2'>please wait ...</p> 
+      <p  class='spinnerText' id='spinnerText3'>ಲೋಡ್ ಆಗುತ್ತಿದೆ</p> 
+      <p  class='spinnerText' id='spinnerText4'>ಸ್ವಲ್ಪ ತಾಳಿ ...</p> 
+    </div>
+</div>
+</nav>
+
+<main>
+
+<div id = "Language" class = "tabcontent">
+
+<ul class="MainMenu" id="MainMenu">
+
+  <li><input type="checkbox" id="DictionaryMainMenu"  onclick="DictionaryMainMenuClick()">
+     <label for="DictionaryMainMenu">Lexicon <b>(ಶಬ್ದಕೋಶ)</b></label>
+      <ul class="DictionarySubMenu"> 
+        <a href ='#' onclick = "openDictionary()"  target="iframe_samples" class="DictionaryBtn">Dictionary <b>(ನಿಘಂಟು)</b></a>
+        <a href ='#' onclick = "openGlossary()"  target="iframe_samples" class="GlossaryBtn">Glossary <b>(ಪದಕೋಶ)</b></a>
+        <li><input type="checkbox" id="SamplesMainMenu">
+          <label for="SamplesMainMenu">Samples <b>(ಉದಾಹರಣೆಗಳು)</b></label>
+          <ul class="SamplesSubMenu"> 
+            <a href ='#' onclick = "openSampleSentences()"  target="iframe_samples">Sentences <b>(ವಾಕ್ಯಗಳು)</b></a>
+            <a href="javascript:showEssayList();" onclick = "openEssay()">Essays <b>(ಪ್ರಬಂಧಗಳು)</b></a>
+          </ul>
+        </li>
+      </ul>
+  </li>
+
+  <li><input type="checkbox" id="LearnMainMenu" onclick="LearnMainMenuClick()">
+     <label for="LearnMainMenu">Learn <b>(ಕಲಿ)</b></label>
+      <ul class="LearnSubMenu"> 
+        <div id="LearnSubMenuDiv">
+          <a href ='#' onclick = "showLearnMenu()"  target="iframe_samples" class="Learnbtn" id="Learnbtn">Sanketi <b>(ಸಂಕೇತಿ)</b></a> 
+          <div class='rightArrow' id="LearnBtnArrow" style="display:none"></div>
+        </div>
+        <a href ='#' onclick = "showTricks()"  target="iframe_samples" class="TricksMenu">Tricks <b>(ಉಪಾಯಗಳು)</b></a>
+        <a href ='#' onclick = "showVariations()"  target="iframe_samples" class="VariationsMenu">Variations <b>(ವ್ಯತ್ಯಾಸಗಳು)</b></a>
+      </ul>
+  </li>
+
+  <li>
+   <div class = "dropdown">
+    <a href="#" target="iframe_samples" class="dropbtn" onclick="downloadClicked()">Download <b>(ಇಳಿಸಿ)</b></a>
+    <div class="dropdown-content" id="dropdown-content">
+      <a href="#" onclick = "createProjectArchive()">Project</a> 
+      <a href="#" onclick = "downloadBooks()"  target="iframe_samples">Books</a>
+    </div>
+   </div> 
+  </li> 
+
+</ul>
+
+<iframe src="" name="iframe_samples" id="iframe_samples" title=""></iframe> 
+
+</div>
+
+<div id="dictionaryFrame" class="dictionaryFrame">
+      <p id="dictionaryText">Select the language in which you want the search word to be displayed from the left hand corner drop down menu. Type the first few letters of the word, select the appropriate word and hit the search button to get its meaning and more.<br><br> 
+               (ಎಡಗಡೆ ಮೂಲೆಯಲ್ಲಿರುವ ಕೆಳಗಡೆ ಬೀಳುವ ಪರಿವಿಡಿಯಿಂದ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆ ಮಾಡಿದರೆ, ಅದರಲ್ಲಿ ಪದವನ್ನು ಹುಡುಕಬಹುದು. ಪದದ ಮೊದಲ ಕೆಲವು ಅಕ್ಷರಗಳನ್ನು ಒತ್ತಿ, ಕಾಣುವ ಸರಿಯಾದ ಪದ ಆಯ್ಕೆ ಮಾಡಿ, ಹುಡುಕು ಬಟನ್ ಒತ್ತಿದರೆ, ಅದರ ಅರ್ಥ ಇತ್ಯಾದಿ ನೋಡಬಹುದು) <br><br><br>
+      </p>
+
+      <form> 	
+   	 <select name="Lang" id="Lang">
+      		<option value="Bettadapura Sanketi">Bettadapura Sanketi (ಬೆಟ್ಟದಪುರ ಸಂಕೇತಿ) </option>
+		<option value="Kaushika Sanketi">Kaushika Sanketi(ಕೌಶಿಕ ಸಂಕೇತಿ)</option>
+		<option value="Lingadahalli Sanketi">Lingadahalli Sanketi(ಲಿಂಗದಹಳ್ಳಿ ಸಂಕೇತಿ)</option>
+		<option value="Mattur Sanketi">Mattur Sanketi(ಮತ್ತೂರು ಸಂಕೇತಿ)</option>
+      		<option value="Kannada">Kannada(ಕನ್ನಡ)</option>
+      		<option value="English">English(ಆಂಗ್ಲ)</option>
+       	 </select>
+       </form> 
+
+       <div class="userSelection">
+          <label for="text"  id="dictionaryLabel">Search word <b>(ಹುಡುಕಲು ಪದ)</b>:</label>
+          <input type="text" id="text" name="text" class="text">  
+          <button type="button" name="Search" class="Search" id="Search" onclick="searchExcel()">Search <b>(ಹುಡುಕು)</b></button>  
+       </div>
+
+       <button id="dictionaryDownloadButton">Download <b>(ಇಳಿಸು)</b></button>
+         <div id="dictionaryDownloadPopup" class="modal"> 
+           <div class="modal-content">
+             <span class="dictionaryPopupClose">&times;</span>
+             <div id="dictionaryDownloadPopupRadioButtons">
+               <input type="radio" name="dictionaryDownloadPopupMode" value="Text" id="dictionaryDownloadPopup_text" checked> 
+               <label for="dictionaryDownloadPopup_text">Text (ಪಠ್ಯ)</label>
+               <br class="mobile" />
+               <input type="radio" name="dictionaryDownloadPopupMode" value="Text and Audio" id="dictionaryDownloadPopup_audio">
+               <label for="dictionaryDownloadPopup_audio">Text & Audio (ಪಠ್ಯ ಮತ್ತು ಆಡಿಯೊ)</label>
+             </div>
+             <div id="dictionaryDownloadPopupCheckBoxes">
+              <div class="dictionaryDownloadPopupRow1">
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_A" name="checkbox_A" value="A" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_A',0)">
+                <label for="dictionaryDownloadPopup_checkbox_A"> A(ಅ ಆ ಅಂ  ಅಃ )</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_B" name="checkbox_B" value="B" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_B',1)">
+                <label for="dictionaryDownloadPopup_checkbox_B"> B(ಬ ಭ )</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_C" name="checkbox_C" value="C" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_C',2)">
+                <label for="dictionaryDownloadPopup_checkbox_C"> C(ಚ ಛ )</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_D" name="checkbox_D" value="D" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_D',3)">
+                <label for="dictionaryDownloadPopup_checkbox_D"> D(ದ ಧ ಡ ಢ)</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_E" name="checkbox_E" value="E" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_E',4)">
+                <label for="dictionaryDownloadPopup_checkbox_E"> E(ಈ ಎ ಏ)</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_G" name="checkbox_G" value="G" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_G',6)">
+                <label for="dictionaryDownloadPopup_checkbox_G"> G(ಗ ಘ)</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_H" name="checkbox_H" value="H" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_H',7)">
+                <label for="dictionaryDownloadPopup_checkbox_H"> H(ಹ )</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_I" name="checkbox_I" value="I" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_I',8)">
+                <label for="dictionaryDownloadPopup_checkbox_I"> I(ಇ ಐ )</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_J" name="checkbox_J" value="J" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_J',9)">
+                <label for="dictionaryDownloadPopup_checkbox_J"> J(ಜ ಝ )</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_K" name="checkbox_K" value="K" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_K',10)">
+                <label for="dictionaryDownloadPopup_checkbox_K"> K(ಕ ಖ )</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_L" name="checkbox_L" value="L" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_L',11)">
+                <label for="dictionaryDownloadPopup_checkbox_L"> L(ಲ ಳ )</label><br>
+               </div>
+              </div> <!-- dictionaryDownloadPopupRow1 -->
+              <div class="dictionaryDownloadPopupRow2">
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_M" name="checkbox_M" value="M" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_M',12)">
+                <label for="dictionaryDownloadPopup_checkbox_M"> M(ಮ )</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_N" name="checkbox_N" value="N" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_N',13)">
+                <label for="dictionaryDownloadPopup_checkbox_N"> N(ನ ಣ )</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_O" name="checkbox_O" value="O" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_O',14)">
+                <label for="dictionaryDownloadPopup_checkbox_O"> O(ಒ ಓ ಔ )</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_P" name="checkbox_P" value="P" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_P',15)">
+                <label for="dictionaryDownloadPopup_checkbox_P"> P(ಪ ಫ )</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_R" name="checkbox_R" value="R" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_R',17)">
+                <label for="dictionaryDownloadPopup_checkbox_R"> R(ರ ಋ)</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_S" name="checkbox_S" value="S" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_S',18)">
+                <label for="dictionaryDownloadPopup_checkbox_S"> S(ಸ ಶ ಷ )</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_T" name="checkbox_T" value="T" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_T',19)">
+                <label for="dictionaryDownloadPopup_checkbox_T"> T(ಟ ಠ ತ ಥ )</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_U" name="checkbox_U" value="U" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_U',20)">
+                <label for="dictionaryDownloadPopup_checkbox_U"> U(ಉ ಊ)</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_V" name="checkbox_V" value="V" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_V',21)">
+                <label for="dictionaryDownloadPopup_checkbox_V"> V(ವ )</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_Y" name="checkbox_Y" value="Y" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_Y',24)">
+                <label for="dictionaryDownloadPopup_checkbox_Y"> Y(ಯ )</label><br>
+               </div>
+               <div class="dictionaryDownloadPopupCol">
+                    <input type="checkbox" class = "dictionaryDownloadPopupCheckbox" id="dictionaryDownloadPopup_checkbox_All" name="checkbox_All" value="All" onclick="dictionaryDownloadPopupCheckBoxClick('dictionaryDownloadPopup_checkbox_All',26)">
+                <label for="dictionaryDownloadPopup_checkbox_All"> All(ಎಲ್ಲ )</label><br>
+               </div>
+              </div> 
+             </div> 
+             <div>  
+                    <button id="dictionaryDownloadPopupOk" onclick = 'dictionaryDownloadPopupOkClicked()'>Ok (ಸರಿ)</button>
+             </div>
+           </div> 
+         </div>  
+       <div class="dictionaryStatisticsPopup" onclick="dictionaryStatistics()">&nbsp&nbsp&nbspStatistics<br>(ಅಂಕಿಅಂಶಗಳು)</br>
+          <span class="dictionaryStatisticsPopupText" id="dictionaryStatisticsPopupTextID"></span> 
+       </div>
+
+       <div id="keyboardDropDown" onclick = "keyboardDropDownClick()">Keyboard <br><b>(ಕೀಲಿಮಣೆ)</b></div>
+
+       <div class="keyboardChart" id="keyboardChart">
+	<table>
+  	  <tr>
+   	    <th><b>Kan</b></th>
+  	    <th><b>Eng</b></th>
+ 	  </tr>
+	  <tr>
+            <td><b>ಅ</b></td>
+	    <td>a</td>
+	  </tr>
+	  <tr>
+            <td><b>ಆ</b></td>
+	    <td>aa</td>
+	  </tr>
+	  <tr>
+            <td><b>ಇ</b></td>
+	    <td>i</td>
+	  </tr>
+	  <tr>
+            <td><b>ಈ</b></td>
+	    <td>ee</td>
+	  <tr>
+            <td><b>ಉ</b></td>
+	    <td>u</td>
+	  </tr>
+	  <tr>
+            <td><b>ಊ</b></td>
+	    <td>uu</td>
+	  </tr>
+	  <tr>
+            <td><b>ಋ</b></td>
+	    <td>Ru</td>
+	  </tr>
+	  <tr>
+            <td><b>ಎ</b></td>
+	    <td>e</td>
+	  </tr>
+	  <tr>
+            <td><b>ಏ</b></td>
+	    <td>E</td>
+	  </tr>
+	  <tr>
+            <td><b>ಐ</b></td>
+	    <td>I/ai</td>
+	  </tr>
+	  <tr>
+            <td><b>ಒ</b></td>
+	    <td>o</td>
+	  </tr>
+	  <tr>
+            <td><b>ಓ</b></td>
+	    <td>O</td>
+	  </tr>
+	  <tr>
+            <td><b>ಔ</b></td>
+	    <td>au/ou</td>
+	  </tr>
+	  <tr>
+            <td><b>ಅಂ</b></td>
+	    <td>am/an</td>
+	  </tr>
+	  <tr>
+            <td><b>ಅಃ</b></td>
+	    <td>aha</td>
+	  </tr>
+          <tr><td style='border:double'></td><td style='border:double'></td></tr>
+	  <tr>
+            <td><b>ಕ</b></td>
+	    <td>ka</td>
+	  </tr>
+	  <tr>
+            <td><b>ಖ</b></td>
+	    <td>kha</td>
+	  </tr>
+	  <tr>
+            <td><b>ಗ</b></td>
+	    <td>ga</td>
+	  </tr>
+	  <tr>
+            <td><b>ಘ</b></td>
+	    <td>gha</td>
+	  </tr>
+	  <tr>
+            <td><b>ಙ</b></td>
+	    <td>gna</td>
+	  </tr>
+          <tr><td></td><td></td></tr>
+	  <tr>
+            <td><b>ಚ</b></td>
+	    <td>cha</td>
+	  </tr>
+	  <tr>
+            <td><b>ಛ</b></td>
+	    <td>cha</td>
+	  </tr>
+	  <tr>
+            <td><b>ಜ</b></td>
+	    <td>ja</td>
+	  </tr>
+	  <tr>
+            <td><b>ಝ</b></td>
+	    <td>jha</td>
+	  </tr>
+	  <tr>
+            <td><b>ಞ</b></td>
+	    <td>nya</td>
+	  </tr>
+          <tr><td></td><td></td></tr>
+	  <tr>
+            <td><b>ಟ</b></td>
+	    <td>Ta</td>
+	  </tr>
+	  <tr>
+            <td><b>ಠ</b></td>
+	    <td>Tha</td>
+	  </tr>
+	  <tr>
+            <td><b>ಡ</b></td>
+	    <td>Da</td>
+	  </tr>
+	  <tr>
+            <td><b>ಢ</b></td>
+	    <td>Dha</td>
+	  </tr>
+	  <tr>
+            <td><b>ಣ</b></td>
+	    <td>Na</td>
+	  </tr>
+          <tr><td></td><td></td></tr>
+	  <tr>
+            <td><b>ತ</b></td>
+	    <td>ta</td>
+	  </tr>
+	  <tr>
+            <td><b>ಥ</b></td>
+	    <td>tha</td>
+	  </tr>
+	  <tr>
+            <td><b>ದ</b></td>
+	    <td>da</td>
+	  </tr>
+	  <tr>
+            <td><b>ಧ</b></td>
+	    <td>dha</td>
+	  </tr>
+	  <tr>
+            <td><b>ನ</b></td>
+	    <td>na</td>
+	  </tr>
+          <tr><td></td><td></td></tr>
+	  <tr>
+            <td><b>ಪ</b></td>
+	    <td>pa</td>
+	  </tr>
+	  <tr>
+            <td><b>ಫ</b></td>
+	    <td>pha</td>
+	  </tr>
+	  <tr>
+            <td><b>ಬ</b></td>
+	    <td>ba</td>
+	  </tr>
+	  <tr>
+            <td><b>ಭ</b></td>
+	    <td>bha</td>
+	  </tr>
+	  <tr>
+            <td><b>ಮ</b></td>
+	    <td>ma</td>
+	  </tr>
+          <tr><td></td><td></td></tr>
+	  <tr>
+            <td><b>ಯ</b></td>
+	    <td>ya</td>
+	  </tr>
+	  <tr>
+            <td><b>ರ</b></td>
+	    <td>ra</td>
+	  </tr>
+	  <tr>
+            <td><b>ಲ</b></td>
+	    <td>la</td>
+	  </tr>
+	  <tr>
+            <td><b>ವ</b></td>
+	    <td>va/wa</td>
+	  </tr>
+	  <tr>
+            <td><b>ಶ</b></td>
+	    <td>sha</td>
+	  <tr>
+            <td><b>ಷ</b></td>
+	    <td>Sha</td>
+	  </tr>
+	  <tr>
+            <td><b>ಸ</b></td>
+	    <td>sa</td>
+	  </tr>
+	  <tr>
+            <td><b>ಹ</b></td>
+	    <td>ha</td>
+	  </tr>
+	  <tr>
+            <td><b>ಳ</b></td>
+	    <td>La</td>
+	  </tr>
+	  <tr>
+            <td><b>ಕ್ಷ</b></td>
+	    <td>kSha</td>
+	  </tr>
+	  <tr>
+            <td><b>ಙ್ಞ</b></td>
+	    <td>gnya</td>
+	  </tr>
+          <tr><td style='border:double'></td><td style='border:double'></td></tr>
+	  <tr>
+            <td><b>ಕಾ</b></td>
+	    <td>kaa</td>
+	  </tr>
+	  <tr>
+            <td><b>ಕಿ</b></td>
+	    <td>ki</td>
+	  </tr>
+	  <tr>
+            <td><b>ಕೀ</b></td>
+	    <td>kee</td>
+	  </tr>
+	  <tr>
+            <td><b>ಕು</b></td>
+	    <td>ku</td>
+	  </tr>
+	  <tr>
+            <td><b>ಕೂ</b></td>
+	    <td>kuu</td>
+	  </tr>
+	  <tr>
+            <td><b>ಕೃ</b></td>
+	    <td>kRu</td>
+	  </tr>
+	  <tr>
+            <td><b>ಕೆ</b></td>
+	    <td>ke</td>
+	  </tr>
+	  <tr>
+            <td><b>ಕೇ</b></td>
+	    <td>kE</td>
+	  </tr>
+	  <tr>
+            <td><b>ಕೈ</b></td>
+	    <td>kI/kai</td>
+	  </tr>
+	  <tr>
+            <td><b>ಕೊ</b></td>
+	    <td>ko</td>
+	  </tr>
+	  <tr>
+            <td><b>ಕೋ</b></td>
+	    <td>kO</td>
+	  </tr>
+	  <tr>
+            <td><b>ಕೌ</b></td>
+	    <td>kau/kou</td>
+	  </tr>
+	  <tr>
+            <td><b>ಕಂ</b></td>
+	    <td>kam</td>
+	  </tr>
+	  <tr>
+            <td><b>ಕಃ</b></td>
+	    <td>kaha</td>
+	  </tr>
+	  <tr>
+            <td><b>ರ್ಕ</b></td>
+	    <td>rka</td>
+	  </tr>
+	  <tr>
+            <td><b>ಕ್</b></td>
+	    <td>k</td>
+	  </tr>
+	  <tr>
+            <td><b>ಕ್ರ</b></td>
+	    <td>kra</td>
+	  </tr>
+	  <tr>
+            <td><span style = 'font-family: Nudi Akshara-07; font-size: 20px;'>APÉ</span></td>
+	    <td>nke/mke</td>
+	  </tr>
+	  <tr>
+            <td><b>ಕ್ಕ</b></td>
+	    <td>kka</td>
+	  </tr>
+	  <tr>
+            <td><b>ಕ್ಯೊ</b></td>
+	    <td>kyo</td>
+	  </tr>
+	  <tr>
+            <td><b>ಕ್ತಿ</b></td>
+	    <td>kti</td>
+	  </tr>
+        </table>
+       </div>  
+       <p id="dictionaryTable"></p>
+</div>  
+
+<div class="Glossary" id="Glossary" style="display:none">
+    <div id="glossaryEnglishAlphabets"> </div>
+    <p> </p>
+    <div id="glossaryKannadaAlphabets"> </div>
+
+    <p id = "glossaryPage" style="font-family: Arial, sans-serif; font size: 5px"> </p>
+    <p id = "glossaryWordList" style="font-family: Arial, sans-serif;"> </p>
+
+    <div id="glossaryWordDiv">
+    <p id = "glossaryWord" class = "glossaryWord"> </p>
+    </div>
+
+    <div id="categoryDownload">
+       <a href="#" id="categoryDownloadLink" style='text-decoration:none;display:none'> Download <br>&nbsp&nbsp(ಇಳಿಸು) </br></a>
+       <div id="categoryDownloadLinkDropdown">
+         <a href="#" onclick = "downloadCategoryText(0)"><i>Text<br> (ಪಠ್ಯ) </br></i> </a>  
+         <a href="#" onclick = "downloadCategoryTextAndAudio()"><i>Text & Audio<br> (ಪಠ್ಯ ಮತ್ತು ಆಡಿಯೊ) </br></i></a>
+       </div>
+    </div>
+    <div class="categoryStatisticsPopup" id="categoryStatisticsPopup" onclick="showCategoryStatistics()">Statistics<br><span style='margin-left:-12px;'>(ಅಂಕಿಅಂಶಗಳು) </span></br>
+      <span class="categoryStatisticsPopupText" id="categoryStatisticsPopupTextID"></span> 
+    </div>
+</div>  
+
+<div id="SampleSentences" style="display:none">
+   <p id="SampleSentencesText">Select a letter below to display all sample sentences starting with that letter in the chosen language<br></br> 
+    <span id="SampleSentencesTextKan">(ಕೆಳಗಿರುವ ಅಕ್ಷರ ಆಯ್ಕೆ ಮಾಡಿದಾಗ, ಆಯ್ಕೆ ಮಾಡಿರುವ ಭಾಷೆಯಲ್ಲಿ ಅದರೊಂದಿಗೆ ಶುರುವಾಗುವ ಎಲ್ಲ ವಾಕ್ಯಗಳನ್ನು ನೋಡಬಹುದು) </span> 
+   </p>
+   <div id="SampleSentencesAlphabetList">
+	<ul class="notmobile">
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_a" onclick="showSampleSentences('A')" target="iframe_samples">A<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ಅ</span></br><span class = "SampleAlphabetListSpan3">ಆ</span></br><span class = "SampleAlphabetListSpan3">ಅಂ</span></br><span class = "SampleAlphabetListSpan3">ಅಃ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_b" onclick="showSampleSentences('B')" target="iframe_samples">B<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ಬ</span></br><span class = "SampleAlphabetListSpan3">ಭ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_c" onclick="showSampleSentences('C')" target="iframe_samples">C<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ಚ</span></br><span class = "SampleAlphabetListSpan3">ಛ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_d" onclick="showSampleSentences('D')" target="iframe_samples">D<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ದ</span></br><span class = "SampleAlphabetListSpan3">ಧ</span></br><span class = "SampleAlphabetListSpan3">ಡ</span></br><span class = "SampleAlphabetListSpan3">ಢ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_e" onclick="showSampleSentences('E')" target="iframe_samples">E<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ಎ</span></br><span class = "SampleAlphabetListSpan3">ಏ</span></br><span class = "SampleAlphabetListSpan3">ಈ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_f" onclick="showSampleSentences('F')" target="iframe_samples">F</a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_g" onclick="showSampleSentences('G')" target="iframe_samples">G<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ಗ</span></br><span class = "SampleAlphabetListSpan3">ಘ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_h" onclick="showSampleSentences('H')" target="iframe_samples">H<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ಹ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_i" onclick="showSampleSentences('I')" target="iframe_samples">I<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ಇ</span></br><span class = "SampleAlphabetListSpan3">ಐ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_j" onclick="showSampleSentences('J')" target="iframe_samples">J<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ಜ</span></br><span class = "SampleAlphabetListSpan3">ಝ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_k" onclick="showSampleSentences('K')" target="iframe_samples">K<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ಕ</span></br><span class = "SampleAlphabetListSpan3">ಖ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_l" onclick="showSampleSentences('L')" target="iframe_samples">L<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ಲ</span></br><span class = "SampleAlphabetListSpan3">ಳ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_m" onclick="showSampleSentences('M')" target="iframe_samples">M<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ಮ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_n" onclick="showSampleSentences('N')" target="iframe_samples">N<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ನ</span></br><span class = "SampleAlphabetListSpan3">ಣ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_o" onclick="showSampleSentences('O')" target="iframe_samples">O<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ಒ</span></br><span class = "SampleAlphabetListSpan3">ಓ</span></br><span class = "SampleAlphabetListSpan3">ಔ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_p" onclick="showSampleSentences('P')" target="iframe_samples">P<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ಪ</span></br><span class = "SampleAlphabetListSpan3">ಫ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_q" onclick="showSampleSentences('Q')" target="iframe_samples">Q</a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_r" onclick="showSampleSentences('R')" target="iframe_samples">R<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ರ</span></br><span class = "SampleAlphabetListSpan3">ಋ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_s" onclick="showSampleSentences('S')" target="iframe_samples">S<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ಸ</span></br><span class = "SampleAlphabetListSpan3">ಶ</span></br><span class = "SampleAlphabetListSpan3">ಷ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_t" onclick="showSampleSentences('T')" target="iframe_samples">T<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ತ</span></br><span class = "SampleAlphabetListSpan3">ಥ</span></br><span class = "SampleAlphabetListSpan3">ಟ</span></br><span class = "SampleAlphabetListSpan3">ಠ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_u" onclick="showSampleSentences('U')" target="iframe_samples">U<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ಉ</span></br><span class = "SampleAlphabetListSpan3">ಊ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_v" onclick="showSampleSentences('V')" target="iframe_samples">V<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ವ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_w" onclick="showSampleSentences('W')" target="iframe_samples">W</a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_x" onclick="showSampleSentences('X')" target="iframe_samples">X</a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_y" onclick="showSampleSentences('Y')" target="iframe_samples">Y<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ಯ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_z" onclick="showSampleSentences('Z')" target="iframe_samples">Z</a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_all" onclick="showSampleSentences('All')" target="iframe_samples">All<br><span class = "SampleAlphabetListSpan1">(</span><span class = "SampleAlphabetListSpan2">ಎಲ್ಲ</span><span class = "SampleAlphabetListSpan4">)</span></a></li>
+	</ul>
+	<ul class="mobile">
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_a" onclick="showSampleSentences('A')" target="iframe_samples">A (ಅ ಆ ಅಂ ಅಃ)</a></li> 
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_b" onclick="showSampleSentences('B')" target="iframe_samples">B (ಬ ಭ)</a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_c" onclick="showSampleSentences('C')" target="iframe_samples">C (ಚ ಛ)</a></li> 
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_d" onclick="showSampleSentences('D')" target="iframe_samples">D (ದ ಧ ಡ ಢ)</a></li> 
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_e" onclick="showSampleSentences('E')" target="iframe_samples">E (ಎ ಏ ಈ)</a></li> 
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_f" onclick="showSampleSentences('F')" target="iframe_samples">F</a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_g" onclick="showSampleSentences('G')" target="iframe_samples">G (ಗ ಘ)</a></li> 
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_h" onclick="showSampleSentences('H')" target="iframe_samples">H (ಹ)</a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_i" onclick="showSampleSentences('I')" target="iframe_samples">I (ಇ ಐ)</a></li> 
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_j" onclick="showSampleSentences('J')" target="iframe_samples">J (ಜ ಝ)</a></li> 
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_k" onclick="showSampleSentences('K')" target="iframe_samples">K (ಕ ಖ)</a></li> 
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_l" onclick="showSampleSentences('L')" target="iframe_samples">L (ಲ ಳ)</a></li> 
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_m" onclick="showSampleSentences('M')" target="iframe_samples">M (ಮ)</a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_n" onclick="showSampleSentences('N')" target="iframe_samples">N (ನ ಣ)</a></li> 
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_o" onclick="showSampleSentences('O')" target="iframe_samples">O (ಒ ಓ ಔ)</a></li> 
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_p" onclick="showSampleSentences('P')" target="iframe_samples">P (ಪ ಫ)</a></li> 
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_q" onclick="showSampleSentences('Q')" target="iframe_samples">Q</a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_r" onclick="showSampleSentences('R')" target="iframe_samples">R (ರ ಋ)</a></li> 
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_s" onclick="showSampleSentences('S')" target="iframe_samples">S (ಸ ಶ ಷ)</a></li> 
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_t" onclick="showSampleSentences('T')" target="iframe_samples">T (ತ ಥ ಟ ಠ)</a></li> 
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_u" onclick="showSampleSentences('U')" target="iframe_samples">U (ಉ ಊ)</a></li> 
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_v" onclick="showSampleSentences('V')" target="iframe_samples">V (ವ)</a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_w" onclick="showSampleSentences('W')" target="iframe_samples">W</a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_x" onclick="showSampleSentences('X')" target="iframe_samples">X</a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_y" onclick="showSampleSentences('Y')" target="iframe_samples">Y (ಯ)</a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_z" onclick="showSampleSentences('Z')" target="iframe_samples">Z</a></li>
+	  <li><a href='#' class="SampleSentencesAlphabetLetter" id="sample_all" onclick="showSampleSentences('All')" target="iframe_samples">All (ಎಲ್ಲ)</a></li>
+	</ul>
+   </div>  
+   <div id="SampleSentencesLanguage">
+        <input type="radio" name="SampleSentencesLanguageSelection" value="Eng" id="sample_lang_eng">
+        <label for="sample_lang_eng">Eng (ಇ)</label>
+        <br class="notmobile" />
+        <input type="radio" name="SampleSentencesLanguageSelection" value="Kan" id="sample_lang_kan">
+        <label for="sample_lang_kan">Kan (ಕ)</label>
+        <br class="notmobile" />
+        <input type="radio" name="SampleSentencesLanguageSelection" value="BS" id="sample_lang_bs">
+        <label for="sample_lang_bs">BS<span id="sample_lang_bs_span">(ಬೆ) </label>
+        <br class="notmobile" />
+        <input type="radio" name="SampleSentencesLanguageSelection" value="KS" id="sample_lang_ks">
+        <label for="sample_lang_ks">KS<span id="sample_lang_ks_span">(ಕೌ)</label>
+        <br class="notmobile" />
+        <input type="radio" name="SampleSentencesLanguageSelection" value="LS" id="sample_lang_ls">
+        <label for="sample_lang_ls">LS<span id="sample_lang_ls_span">(ಲಿ)</label>
+        <br class="notmobile" />
+        <input type="radio" name="SampleSentencesLanguageSelection" value="MS" id="sample_lang_ms">
+        <label for="sample_lang_ms">MS<span id="sample_lang_ms_span">(ಮ)</label>
+    </div>  
+    <div id="SampleSentencesDownload"> 
+           <div id="SampleSentencesDownloadButton" onclick="showSampleSentencesDropDown()">Download<br/><span id="SampleSentencesDownloadButton_Kan">(ಇಳಿಸು) </span></div>
+           <div id="SampleSentencesDownloadDropdown">
+              <a href="#" onclick = "downloadSampleSentences()"><i>Text(ಪಠ್ಯ) </i></a>  
+              <a href="#" onclick = "downloadSampleSentencesAndAudio()"><i>Text & Audio<br/>(ಪಠ್ಯ ಮತ್ತು ಆಡಿಯೊ)</i></a>
+           </div>
+    </div>  
+    <div class="sampleSentencesStatisticsPopup" onclick="showSampleSentencesStatistics()">Statistics<br/><span style='margin-left:-12px;'>(ಅಂಕಿಅಂಶಗಳು) </span>
+      <span class="sampleSentencesStatisticsPopupText" id="sampleSentencesStatisticsPopupTextID"></span> 
+    </div>
+    <div id="SampleSentencesData"></div>
+</div>  
+
+<div id="Essay" style = "display:none">
+  <div id="Essay_left_panel">   
+  <button type="button" class="collapsible">&nbsp Festivals (ಹಬ್ಬಗಳು)</button>
+    <div class="collapsibleContent">
+       <a href="#" style="text-decoration:none;" onclick = "showAllEssays(0)">&nbsp &nbsp &nbsp &nbsp &nbsp Makara Sankraanti (ಮಕರ ಸಂಕ್ರಾಂತಿ)</a>
+    </div>
+  </div>
+  <div id="Essay_right_panel">
+    <div id="Essay_drag"></div>
+  </div>
+</div>
+
+  <div class="LearnMenu-content" id="LearnMenu-content" style = "display:none">
+    <a href="#" onclick = "openLearnSanketi('BS')">BS(ಬೆ)</a>  
+    <a href="#" onclick = "openLearnSanketi('KS')">KS(ಕೌ)</a>  
+    <a href="#" onclick = "openLearnSanketi('LS')">LS(ಲಿ)</a>
+    <a href="#" onclick = "openLearnSanketi('MS')">MS(ಮ)</a>
+  </div>
+
+<div class="LearnSanketi" id="LearnSanketi" style="display:none">
+  <div class=learnSanketiTop">
+    <p id="learnSanketiTopText">To play the audio, select and click a lesson from the options below <br><b>(ಆಡಿಯೊ ಶುರು ಮಾಡಲು  ಕೆಳಗಿರುವ ಆಯ್ಕೆಗಳ್ಲಲಿ ಒಂದು ಪಾಠವನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ)</b></p>
+    <div id="learnAudioDiv" style="display:none;"> 
+       <p id="audioLessonTitle" style="text-align:center;color:#4A235A;text-decoration:underline;"></p>
+       <div id="audioTranscriptionDiv"> 
+         <p id="audioTranscription" style="line-height: 20px"></p> 
+       </div> 
+       <button id="audioDownload" onclick="downloadLessonsAudio()">Download <b>(ಇಳಿಸು)</b></button>
+    </div>
+    <div>
+       <p class="notmobile" id="audioDownloadAllText">To download the entire set from all three sections<br><span style="display: inline-block; width: 11ch;">&#9;</span>Click on the button below<br><b>(ಮೂರು ವರ್ಗಗಳಿಗೆ ಸೇರಿದ ಪೂರ್ತಿ ಗುಂಪು ಇಳಿಸಿ ಕೊಳ್ಳುವುದಕ್ಕೆ<span style="display: inline-block; width: 13ch;">&#9;</span>ಕೆಳಗಿರುವ ಗುಂಡಿ ಒತ್ತಿ)</b></p>
+       <p class="mobile" id="audioDownloadAllText">To download the entire set from all three sections, click on the button below<br><b>(ಮೂರು ವರ್ಗಗಳಿಗೆ ಸೇರಿದ ಪೂರ್ತಿ ಗುಂಪು ಇಳಿಸಿ ಕೊಳ್ಳುವುದಕ್ಕೆ ಕೆಳಗಿರುವ ಗುಂಡಿ ಒತ್ತಿ)</b></p>
+       <button id="audioDownloadAll" onclick="downloadAllLessonsAudio()">Download All <b>(ಎಲ್ಲ ಇಳಿಸು)</b></button>
+    </div>
+   </div>
+   <div class="learnSanketiBottom">
+     <div id = "parentLearnSimpleLessons">
+       <p style="color:#641E16;text-align:center;"><b><u>Simple(ಸುಲಭ)</b></u></p>
+       <div id="learnSimpleLessons"></div>
+       <button id="audioDownloadSimple" onclick="downloadAllSimpleLessonsAudio()">Download All <b>(ಎಲ್ಲ ಇಳಿಸು)</b></button>
+     </div>
+     <div id = "parentLearnIntermediateLessons">
+       <p style="color:#641E16;text-align:center;"><b><u>Intermediate(ಮಧ್ಯಮ)</b></u></p>
+       <div id="learnIntermediateLessons"> </div>
+       <button id="audioDownloadIntermediate" onclick="downloadAllIntermediateLessonsAudio()">Download All <b>(ಎಲ್ಲ ಇಳಿಸು)</b></button>
+     </div>
+     <div id="parentLearnComplexLessons">
+       <p style="color:#641E16;text-align:center;"><b><u>Complex(ಕಠಿಣ)</b></u></p>
+       <div id="learnComplexLessons"> </div>
+       <button id="audioDownloadComplex" onclick="downloadAllComplexLessonsAudio()">Download All <b>(ಎಲ್ಲ ಇಳಿಸು)</b></button>
+     </div>
+   </div> 
+</div> 
+
+<div id="WaitForTricks"></div>
+<div class="Tricks" id="Tricks" style="display:none">
+<p class="notmobile" style="text-align:center;color: #0E6251;">Use these tricks to talk in Sanketi <br><span style="font-size:medium;">(ಸಂಕೇತಿಯಲ್ಲಿ ಮಾತಾಡಲು ಈ ಉಪಾಯಗಳನ್ನು ಪ್ರಯೋಗಿಸಿ)</span></br></p>
+<p class="mobile" style="text-align:center;color: #0E6251;font-size:small;">Use these tricks to talk in Sanketi <br><span style="font-size:small;text-align:center;">(ಸಂಕೇತಿಯಲ್ಲಿ ಮಾತಾಡಲು ಈ ಉಪಾಯಗಳನ್ನು ಪ್ರಯೋಗಿಸಿ)</span></br></p>
+<p class="notmobile" style="text-align:center;font-weight:normal;font-size:small;color:#48C9B0;">Please note that these tricks may not apply in all cases, but will definitely come in handy for a beginner who is attempting to learn the language <br><b>(ದಯವಿಟ್ಟು ಗಮನಿಸಿ - ಈ ಉಪಾಯಗಳು ಎಲ್ಲಾ ಸಂದರ್ಭಗಳಲ್ಲು ಅನ್ವಯಿಸುವುದಿಲ್ಲ. ಆದರೆ ಹೊಸದಾಗಿ ಭಾಷೆ ಕಲಿಯುಲು ಪ್ರಯತ್ನಿಸುತ್ತಿರುವ ಆಸಕ್ತನಿಗೆ ಇವು ಖಂಡಿತ ಉಪಯುಕ್ತ)</b></br></p>
+<p class="mobile" style="text-align:center;font-weight:normal;font-size:10px;color:#48C9B0;">Please note that these tricks may not apply in all cases, but will definitely come in handy for a beginner who is attempting to learn the language <br><b>(ದಯವಿಟ್ಟು ಗಮನಿಸಿ - ಈ ಉಪಾಯಗಳು ಎಲ್ಲಾ ಸಂದರ್ಭಗಳಲ್ಲು ಅನ್ವಯಿಸುವುದಿಲ್ಲ. ಆದರೆ ಹೊಸದಾಗಿ ಭಾಷೆ ಕಲಿಯುಲು ಪ್ರಯತ್ನಿಸುತ್ತಿರುವ ಆಸಕ್ತನಿಗೆ ಇವು ಖಂಡಿತ ಉಪಯುಕ್ತ)</b></br></p>
+<br>
+<div id="Trick_Similarity_Kannada_Title">
+  <h1 class="Tricks_data_heading">Similarity with Kannada (ಕನ್ನಡಕ್ಕೆ ಹೋಲಿಕೆ)</h1>
+  <p class="Tricks_data_text">In many cases, usage in Sanketi is the same as in Kannada without any difference. In such cases, kannada word will act as a direct substitute in Sanketi.</p>
+  <p class="Tricks_data_text"><b>(ಹಲವು ಬಾರಿ ಸಂಕೇತಿ ಪದ ಬಳಿಕೆ ಕನ್ನಡಕ್ಕೆ ಹೊರತಾಗಿರುವುದಿಲ್ಲ. ಆ ಸಂದರ್ಭಗಳಲ್ಲಿ ಕನ್ನಡ ಪದವನ್ನ ಯಾವ ಬದಲಾವಣೆ ಇಲ್ಲದೆ ಹಾಗೆಯೇ ಸಂಕೇತಿಯಲ್ಲಿ ಉಪಯೋಗಿಸಬಹುದು)</b></p>
+</div>
+<div id="Trick_Similarity_Kannada"></div>
+<br><br>
+
+<div id="Trick_Replace_a_with_o_Title">
+  <h1 class="Tricks_data_heading">Replace a at the end with o (ಕೊನೆಯಲ್ಲಿ ಇರುವ ಅ ಬದಲು ಒ ಬಳಸಿ)</h1>
+  <p class="Tricks_data_text">In some cases by simply replacing the last letter of a with o, the kannada word becomes sanketi word</p>
+  <p class="Tricks_data_text"><b>(ಕೆಲವೊಮ್ಮೆ ಕೊನೆಯಲ್ಲಿರುವ 'ಅ' ಅಕ್ಷರವನ್ನು 'ಒ' ಅಕ್ಷರದಿಂದ ಬದಲಾಯಿಸಿದರೆ, ಆ ಕನ್ನಡ ಪದವು ಸಂಕೇತಿ ಪದವಾಗುತ್ತದೆ)</b></p>
+</div>
+<div id="Trick_Replace_a_with_o"></div>
+<br><br>
+
+<div id="Trick_Replace_u_with_i_Title">
+  <h1 class="Tricks_data_heading">Replace u at the end with i (ಕೊನೆಯಲ್ಲಿ ಇರುವ ಅ ಬದಲು ಒ ಬಳಸಿ)</h1>
+  <p class="Tricks_data_text">In some cases by simply replacing the last letter(which is mostly a u) with i, the kannada word transforms into sanketi word</p>
+  <p class="Tricks_data_text"><b>(ಕೆಲವು ಸಲ ಕೊನೆಯಲ್ಲಿರುವ  ಅಕ್ಷರವನ್ನು (ಅದು ಸಾಮಾನ್ಯವಾಗಿ 'ಉ' ಅಕ್ಷರ ಆಗಿರುತ್ತದೆ) 'ಇ' ಅಕ್ಷರದಿಂದ ಬದಲಾಯಿಸಿದರೆ, ಆ ಕನ್ನಡ ಪದವು ಸಂಕೇತಿ ಪದವಾಗಿ ಮಾರ್ಪಾಟಾಗುತ್ತದೆ)</b></p>
+</div>
+<div id="Trick_Replace_u_with_i"></div>
+<br><br>
+
+<div id="Trick_Replace_h_with_p_Title">
+  <h1 class="Tricks_data_heading">Replace first letter h with p (ಮೊದಲ ಅಕ್ಷರವನ್ನು ಹ ಬದಲು ಪ ಮಾಡಿ)</h1>
+  <p class="Tricks_data_text">In a few cases replacing the first letter h of the kannada word with a p yields the equivalent Sanketi word </p>
+  <p class="Tricks_data_text"><b>(ಕೆಲವು ಬಾರಿ ಕನ್ನಡ ಪದದ ಮೊದಲ ಅಕ್ಷರವನ್ನು ಹ ಬದಲು ಪ ಮಾಡಿದರೆ ಅದರ ಸಮನಾದ ಸಂಕೇತಿ ಪದ ದೊರಕುವುದು)</b></p>
+</div>
+<div id="Trick_Replace_h_with_p"></div>
+<br><br>
+
+<div id="Trick_Replace_b_with_v_Title">
+  <h1 class="Tricks_data_heading">Replace first letter b with v (ಮೊದಲ ಅಕ್ಷರವನ್ನು ಬ ಬದಲು ವ ಮಾಡಿ)</h1>
+  <p class="Tricks_data_text">In a few cases replacing the first letter b (mostly) of the kannada word with a v yields the equivalent Sanketi word </p>
+  <p class="Tricks_data_text"><b>(ಕೆಲವು ಬಾರಿ ಕನ್ನಡ ಪದದ ಮೊದಲ ಅಕ್ಷರವನ್ನು ಬ (ಸಾಮಾನ್ಯವಾಗಿ) ಬದಲು ವ ಮಾಡಿದರೆ ಅದರ ಸಮನಾದ ಸಂಕೇತಿ ಪದ ದೊರಕುವುದು</b></p>
+</div>
+<div id="Trick_Replace_b_with_v"></div>
+<br><br>
+
+<div id="Trick_More_on_Kannada_Sanketi_Connection_Title">
+<h1 class="Tricks_data_heading">More on Kannada Sanketi connection (ಕನ್ನಡ ಸಂಕೇತಿ ನಂಟಿನ ಇನ್ನಷ್ಟು ಮಾಹಿತಿ)</h1>
+<p class="Tricks_data_text">Take a look at a few other interesting examples not present above, shown here just to depict the close link Sanketi has with Kannada, although they dont reveal any specific pattern or are very significant</p>
+<p class="Tricks_data_text">(ಮೇಲೆ ಉಲ್ಲೇಖವಾಗದ ಇನ್ನಷ್ಟು ಕುತೂಹಲಕಾರಿ ಉದಾಹರಣೆಗಳನ್ನು ನೋಡಿ. ಇಲ್ಲಿ ವ್ಯಕ್ತ ಪಡಿಸಿರುವ ಉದ್ದೇಶ ಕನ್ನಡಕ್ಕು ಸಂಕೇತಿಗು ಇರುವ ಹತ್ತಿರದ ನಂಟು ತೋರಿಸುವುದಕ್ಕಾಗಿ. ಇವು ಯಾವ ಮಾದರಿಯನ್ನು ಸೂಚಿಸುವುದಿಲ್ಲ ಹಾಗು ವಿಶೇಷವಾಗಿ ಗಮನಾರ್ಹವೂ ಅಲ್ಲ)</p>
+</div>
+<div id="Trick_More_on_Kannada_Sanketi_Connection"></div>
+<br><br>
+
+<div id="Trick_Similarity_Tamil_Title">
+  <h1 class="Tricks_data_heading">Similarity with Tamil (ತಮಿಳು ಹೋಲಿಕೆ)</h1>
+  <p class="Tricks_data_text">In few rare cases, usage in Sanketi is the same as in Tamil with little/no difference. In such cases, tamil word will act as a direct/closest substitute in Sanketi.</p>
+  <p class="Tricks_data_text"><b>(ಕೆಲವು ಅಪರೂಪ ಸಂದರ್ಭಗಳಲ್ಲಿ ಸಂಕೇತಿಗೂ ತಮಿಳಿಗೂ ಸ್ವಲ್ಪ/ಏನೂ ವೆತ್ಯಾಸವಿರುವುದಿಲ್ಲ. ಆ ಸಂದರ್ಭಗಳಲ್ಲಿ ತಮಿಳು ಪದವನ್ನ ಸಂಕೇತಿಯಲ್ಲೂ ಏನೂ ಬದಲಾಯಿಸದೆ/ಸ್ವಲ್ಪ ಬದಲಾಯಿಸಿ  ಉಪಯೋಗಿಸಬಹುದು)</b></p>
+</div>
+<div id="Trick_Similarity_Tamil">
+  <table class="Tricks_table" id="Tricks_Tamil_Table">
+  <tr><th>English</th><th>Tamil (ತಮಿಳು)</th><th>Sanketi (ಸಂಕೇತಿ)</th></tr>
+  <tr><td>Happened</td><td>aachi <span class="Tricks_data">(ಆಚಿ)</span></td><td>aachi <span class="Tricks_data">(ಆಚಿ)</span></td></tr>
+  <tr><td>Father-in-law</td><td>maamnaar <span class="Tricks_data">(ಮಾಮ್ನಾರ್)</span></td><td>maamna <span class="Tricks_data">(ಮಾಮ್ನ)</span></td></tr>
+  <tr><td>Mother-in-law</td><td>maamyaar <span class="Tricks_data">(ಮಾಮ್ಯಾರ್)</span></td><td>maamya <span class="Tricks_data">(ಮಾಮ್ಯ)</span></td></tr>
+  <tr><td>Hair</td><td>mair <span class="Tricks_data">(ಮೈರ್)</span></td><td>mair/mairi <span class="Tricks_data">(ಮೈರ್/ಮೈರಿ)</span></td></tr>
+  <tr><td>I</td><td>naa <span class="Tricks_data">(ನಾ)</span></td><td>naa <span class="Tricks_data">(ನಾ)</span></td></tr>
+  <tr><td>Citron</td><td>naartanga <span class="Tricks_data">(ನಾರ್ತಂಗ)</span></td><td>naartanga <span class="Tricks_data">(ನಾರ್ತಂಗ)</span></td></tr>
+  <tr><td>You</td><td>nee <span class="Tricks_data">(ನೀ)</span></td><td>nee <span class="Tricks_data">(ನೀ)</span></td></tr>
+  <tr><td>Teeth</td><td>pal <span class="Tricks_data">(ಪಲ್)</span></td><td>pal <span class="Tricks_data">(ಪಲ್)</span></td></tr>
+  <tr><td>Milk</td><td>paal <span class="Tricks_data">(ಪಾಲ್)</span></td><td>paal/paali <span class="Tricks_data">(ಪಾಲ್/ಪಾಲಿ)</span></td></tr>
+  <tr><td>Song</td><td>paaT <span class="Tricks_data">(ಪಾಟ್)</span></td><td>paaT/paaTi <span class="Tricks_data">(ಪಾಟ್/ಪಾಟಿ)</span></td></tr>
+  <tr><td>Name</td><td>pEr <span class="Tricks_data">(ಪೇರ್)</span></td><td>pEr/pEri <span class="Tricks_data">(ಪೇರ್/ಪೇರಿ)</span></td></tr>
+  <tr><td>Go</td><td>po <span class="Tricks_data">(ಪೊ)</span></td><td>po <span class="Tricks_data">(ಪೊ)</span></td></tr>
+  <tr><td>Catch</td><td>puDi <span class="Tricks_data">(ಪುಡಿ)</span></td><td>puDi <span class="Tricks_data">(ಪುಡಿ)</span></td></tr>
+  <tr><td>Two</td><td>ranD <span class="Tricks_data">(ರಂಡ್)</span></td><td>ranD/ranDi <span class="Tricks_data">(ರಂಡ್/ರಂಡಿ)</span></td></tr>
+  <tr><td>Curd</td><td>tair <span class="Tricks_data">(ತೈರ್)</span></td><td>tair/tairi <span class="Tricks_data">(ತೈರ್/ತೈರಿ)</span></td></tr>
+  <tr><td>Come</td><td>vaa <span class="Tricks_data">(ವಾ)</span></td><td>vaa <span class="Tricks_data">(ವಾ)</span></td></tr>
+  <tr><td>Bangle</td><td>vaLe <span class="Tricks_data">(ವಳೆ)</span></td><td>vaLe <span class="Tricks_data">(ವಳೆ)</span></td></tr>
+  <tr><td>Beetle leaf</td><td>vettale <span class="Tricks_data">(ವೆತ್ತಲೆ)</span></td><td>vetle <span class="Tricks_data">(ವೆತ್ಲೆ)</span></td></tr>
+  </table>
+</div>
+
+</div>
+
+<div id="Variations" style="display:none;">
+
+<button class="VariationsPage" onclick="openVariationsPage('Variation_1', this,)" id="VariationsPageDefaultOpen">Variation 1 <b>(ವ್ಯತ್ಯಾಸ ೧)</b></button>
+<button class="VariationsPage" onclick="openVariationsPage('Variation_2', this,)">Variation 2 <b>(ವ್ಯತ್ಯಾಸ ೨)</b></button>
+<button class="VariationsPage" onclick="openVariationsPage('Variation_3', this,)">Variation 3 <b>(ವ್ಯತ್ಯಾಸ ೩)</b></button>
+<button class="VariationsPage" onclick="openVariationsPage('Variation_4', this,)">Variation 4 <b>(ವ್ಯತ್ಯಾಸ ೪)</b></button>
+<button class="VariationsPage" onclick="openVariationsPage('Variation_5', this,)">Variation 5 <b>(ವ್ಯತ್ಯಾಸ ೫)</b></button>
+<button class="VariationsPage" onclick="openVariationsPage('Variation_6', this,)">Variation 6 <b>(ವ್ಯತ್ಯಾಸ ೬)</b></button>
+
+<div id="Variation_1" class="VariationTabContent">
+
+  <table class="Variations_Table" id="Variations_Table_1">
+
+  <tr><th>English</th>
+      <th>Kannada (ಕನ್ನಡ)</th>
+      <th style="border-right-style:none;"></th><th style="border-left-style:none;border-right-style:none;">Sanketi (ಸಂಕೇತಿ)</th><th style="border-left-style:none;"></th></tr>
+
+  <tr><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Present</td><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Present<br>(ವರ್ತಮಾನ)</td>
+      <td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Past<br>(ಭೂತ)</td>
+      <td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Present<br>(ವರ್ತಮಾನ)</td>
+      <td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Future<br>(ಭವಿಷ್ಯ)</td></tr>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="5">Past starting with 'pi', Future with 'mu' <br> (ಭೂತ 'ಪಿ' ಇಂದ ಶುರುವಾಗುತ್ತದೆ, ಭವಿಷ್ಯ 'ಮು' ಇಂದ)</td>
+
+  <tr><td>Today</td><td>ivattu <br><b>(ಇವತ್ತು)</b></td><td>nEti <br><b>(ನೇತಿ)</b></td><td>inDi <br><b>(ಇಂಡಿ)</b></td><td>naaLe <br><b>(ನಾಳೆ)</b></td></tr>
+  <tr><td>Today</td><td>ivattu <br><b>(ಇವತ್ತು)</b></td><td>pittaana <br><b>(ಪಿತ್ತಾನ)</b></td><td>inDi <br><b>(ಇಂಡಿ)</b></td><td>munna <br><b>(ಮುನ್ನ)</b></td></tr> 
+  <tr><td>Now</td><td>eega <br><b>(ಈಗ)</b></td><td>pinteele <br><b>(ಪಿಂತೀಲೆ)</b></td><td>ippo <br><b>(ಇಪ್ಪೊ)</b></td><td>munteeki <br><b>(ಮುಂತೀಕಿ)</b></td></tr>
+  <tr><td>Current</td><td>eeginaddu <br><b>(ಈಗಿನದ್ದು)</b></td><td>pinteetEdi <br><b>(ಪಿಂತೀತೇದಿ)</b></td><td>ippOdEtEdi <br><b>(ಇಪ್ಪೋದೇತೇದಿ)</b></td><td>munteetEdi <br><b>(ಮುಂತೀತೇದಿ)</b></td></tr>
+
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="5">Situations where this usage is apt (ಈ ಬಳಕೆಗೆ ಸೂಕ್ತವಾದ ಸಂದರ್ಭಗಳು) : Words that denote time (ಕಾಲವನ್ನು ಸೂಚಿಸುವ ಪದಗಳು)</td>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="5">Present ending with 'raaNe/raaNo/raanne', Future with 'aaNe/aaNo/aanne' <br> (ವರ್ತಮಾನ 'ರಾಣೆ/ರಾಣೊ/ರಾನ್ನೆ' ಇಂದ ಕೊನೆಯಾಗುವುದು, ಭವಿಷ್ಯ 'ಆಣೆ/ಆಣೊ/ಆನ್ನೆ' ಇಂದ)</td>
+
+  <tr><td>(They) Are laughing</td><td>naguttiddaare <br><b>(ನಗುತ್ತಿದ್ದಾರೆ)</b></td><td>chirachdine <br><b>(ಚಿರಚ್ದಿನೆ)</b></td><td>chiryaanDraanne <br><b>(ಚಿರ್ಯಾಂಡ್ರಾನ್ನೆ)</b></td><td>chiryaanne <br><b>(ಚಿರ್ಯಾನ್ನೆ)</b></td></tr>  
+  <tr><td>Am eating</td><td>tinnuttiddeeni <br><b>(ತಿನ್ನುತ್ತಿದ್ದೀನಿ)</b></td><td>chuuDne <br><b>(ಚೂಡ್ನೆ)</b></td><td>chuuDaanDraaNe <br><b>(ಚೂಡಾಂಡ್ರಾಣೆ)</b></td><td>chuuDaaNu/Ne <br><b>(ಚೂಡಾಣು/ಣೆ)</b></td></tr>
+  <tr><td>Am waking up</td><td>ELuttiddeeni <br><b>(ಏಳುತ್ತಿದ್ದೀನಿ)</b></td><td>Onde <br><b>(ಓಂದೆ)</b></td><td>OndraanDraaNe <br><b>(ಓಂದ್ರಾಂಡ್ರಾಣೆ)</b></td><td>OndraaNe <br><b>(ಓಂದ್ರಾಣೆ)</b></td></tr>
+  <tr><td>Am seeing</td><td>nODuttiddeeni <br><b>(ನೋಡುತ್ತಿದ್ದೀನಿ)</b></td><td>paatraaNe <br><b>(ಪಾತ್ರಾಣೆ)</b></td><td>paavaanDraaNe <br><b>(ಪಾವಾಂಡ್ರಾಣೆ)</b></td><td>paavaaNe <br><b>(ಪಾವಾಣೆ)</b></td></tr>
+  <tr><td>Am seeing</td><td>nODuttiddeeni <br><b>(ನೋಡುತ್ತಿದ್ದೀನಿ)</b></td><td>paatinde <br><b>(ಪಾತಿಂದೆ)</b></td><td>paavaanDraaNe <br><b>(ಪಾವಾಂಡ್ರಾಣೆ)</b></td><td>paavaaNe <br><b>(ಪಾವಾಣೆ)</b></td></tr>
+  <tr><td>Am seeing</td><td>nODuttiddeeni <br><b>(ನೋಡುತ್ತಿದ್ದೀನಿ)</b></td><td>paate <br><b>(ಪಾತೆ)</b></td><td>paavaanDraaNe <br><b>(ಪಾವಾಂಡ್ರಾಣೆ)</b></td><td>paavaaNe <br><b>(ಪಾವಾಣೆ)</b></td></tr>
+  <tr><td>(We) Are seeing</td><td>nODuttiddeevi <br><b>(ನೋಡುತ್ತಿದ್ದೀವಿ)</b></td><td>paatindo <br><b>(ಪಾತಿಂದೊ)</b></td><td>paavaanDraaNo <br><b>(ಪಾವಾಂಡ್ರಾಣೊ)</b></td><td>paavaaNo <br><b>(ಪಾವಾಣೊ)</b></td></tr>
+  <tr><td>Am doing</td><td>maaDuttiddeeni <br><b>(ಮಾಡುತ್ತಿದ್ದೀನಿ)</b></td><td>paNNe <br><b>(ಪಣ್ಣೆ)</b></td><td>paNNaanDraaNe <br><b>(ಪಣ್ಣಾಂಡ್ರಾಣೆ)</b></td><td>paNNaaNu/Ne <br><b>(ಪಣ್ಣಾಣು/ಣೆ)</b></td></tr> <!-- I will call him as soon as possible - Simple future tense -->
+  <tr><td>Have done</td><td>maaDiddeeni <br><b>(ಮಾಡಿದ್ದೀನಿ)</b></td><td>paNNe <br><b>(ಪಣ್ಣೆ)</b></td><td>paNNiraaNe <br><b>(ಪಣ್ಣಿರಾಣೆ)</b></td><td>paNNaaNu/Ne <br><b>(ಪಣ್ಣಾಣು/ಣೆ)</b></td></tr> <!-- I have already prepared breakfast - Present perfect tense -->
+  <tr><td>Am going</td><td>hOguttiddeeni <br><b>(ಹೋಗುತ್ತಿದ್ದೀನಿ)</b></td><td>pOyinde <br><b>(ಪೋಯಿಂದೆ)</b></td><td>pOnDraaNe <br><b>(ಪೋಂಡ್ರಾಣೆ)</b></td><td>pONu/Ne <br><b>(ಪೋಣು/ಣೆ)</b></td></tr>
+  <tr><td>Am there</td><td>iddeeni <br><b>(ಇದ್ದೀನಿ)</b></td><td>inde <br><b>(ಇಂದೆ)</b></td><td>raaNe <br><b>(ರಾಣೆ)</b></td><td>ikkaaNe <br><b>(ಇಕ್ಕಾಣೆ)</b></td></tr>
+  <tr><td>Am drinking</td><td>kuDiyuttiddeeni <br><b>(ಕುಡಿಯುತ್ತಿದ್ದೀನಿ)</b></td><td>saapTe <br><b>(ಸಾಪ್ಟೆ)</b></td><td>saapDaanDraaNe <br><b>(ಸಾಪ್ಡಾಂಡ್ರಾಣೆ)</b></td><td>saapDaaNu/Ne <br><b>(ಸಾಪ್ಡಾಣು/ಣೆ)</b></td></tr>
+  <tr><td>Am coming</td><td>baruttiddeeni <br><b>(ಬರುತ್ತಿದ್ದೀನಿ)</b></td><td>vandinde <br><b>(ವಂದಿಂದೆ)</b></td><td>vaaraanDraaNe <br><b>(ವಾರಾಂಡ್ರಾಣೆ)</b></td><td>vaaraaNe <br><b>(ವಾರಾಣೆ)</b></td></tr>
+
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="5">Situations where this usage is apt (ಈ ಬಳಕೆಗೆ ಸೂಕ್ತವಾದ ಸಂದರ್ಭಗಳು) : While referring to I/We/They (ನಾನು/ನಾವು/ಅವರು ಶಬ್ಧಗಳು ಪ್ರಯೋಗ ಆದಾಗ)</td>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="5">Present ending with 'aandi', Future with 'aandi/aaNu' <br> (ವರ್ತಮಾನ 'ಆಂದಿ' ಇಂದ ಕೊನೆಯಾಗುವುದು, ಭವಿಷ್ಯ 'ಆಂದಿ/ಆಣು' ಇಂದ)</td>
+
+  <tr><td>Is happening</td><td>aaguttide <br><b>(ಆಗುತ್ತಿದೆ)</b></td><td>aachi <br><b>(ಆಚಿ)</b></td><td>aagaanDraandi <br><b>(ಆಗಾಂಡ್ರಾಂದಿ)</b></td><td>aagaaNu <br><b>(ಆಗಾಣು)</b></td></tr>
+  <tr><td>Is ready</td><td>aagide/aagiddaane/Le <br><b>(ಆಗಿದೆ/ಆಗಿದ್ದಾನೆ/ಳೆ)</b></td><td>aaiyndi <br><b>(ಆಯಿಂದಿ)</b></td><td>aayraandi <br><b>(ಆಯ್ರಾಂದಿ)</b></td><td>aayikkaandi <br><b>(ಆಯಿಕ್ಕಾಂದಿ)</b></td></tr> <!-- She will have been ready by the time I get home - Future perfect tense -->
+  <tr><td>Is crying</td><td>aLuttiddaane/Le <br><b>(ಅಳುತ್ತಿದ್ದಾನೆ/ಳೆ)</b></td><td>aLaddi <br><b>(ಅಳದ್ದಿ)</b></td><td>aLaanDraandi <br><b>(ಅಳಾಂಡ್ರಾಂದಿ)</b></td><td>aLaandi <br><b>(ಅಳಾಂದಿ)</b></td></tr>
+  <tr><td>Has become</td><td>aagide/aagiddaane/Le <br><b>(ಆಗಿದೆ/ಆಗಿದ್ದಾನೆ/ಳೆ)</b></td><td>aayindi <br><b>(ಆಯಿಂದಿ)</b></td><td>aayraandi <br><b>(ಆಯ್ರಾಂದಿ)</b></td><td>aagaandi <br><b>(ಆಗಾಂದಿ)</b></td></tr>
+  <tr><td>Is cooking</td><td>aDige maaDuttiddaane/Le <br><b>(ಅಡಿಗೆ ಮಾಡುತ್ತಿದ್ದಾನೆ/ಳೆ)</b></td><td>chamachdi <br><b>(ಚಮಚ್ದಿ)</b></td><td>chamayaanDraandi <br><b>(ಚಮಯಾಂಡ್ರಾಂದಿ)</b></td><td>chamyaandi/chamayaaNu <br><b>(ಚಮ್ಯಾಂದಿ/ಚಮಯಾಣು)</b></td></tr>
+  <tr><td>Is watching</td><td>nODuttide/nODuttiddaane/Le <br><b>(ನೋಡುತ್ತಿದೆ/ನೋಡುತ್ತಿದ್ದಾನೆ/ಳೆ)</b></td><td>paatkanDindi <br><b>(ಪಾತ್ಕಂಡಿಂದಿ)</b></td><td>paatkanDraandi <br><b>(ಪಾತ್ಕಂಡ್ರಾಂದಿ)</b></td><td>paatkanDikkaandi <br><b>(ಪಾತ್ಕಂಡಿಕ್ಕಾಂದಿ)</b></td></tr> <!-- He will have been watching tv for two hours when we have dinner - Future perfect Continuous tense -->
+  <tr><td>Has been doing</td><td>maaDikonDu bandide/bandiddaane/Le <br><b>(ಮಾಡಿಕೊಂಡು ಬಂದಿದೆ/ಬಂದಿದ್ದಾನೆ/ಳೆ)</b></td><td>paNkyanDvandindi <br><b>(ಪಣ್ಕ್ಯಂಡ್ವಂದಿಂದಿ)</b></td><td>paNkyanDvandraandi <br><b>(ಪಣ್ಕ್ಯಂಡ್ವಂದ್ರಾಂದಿ)</b></td><td>paNkyanDvaaraaNu <br><b>(ಪಣ್ಕ್ಯಂಡ್ವಾರಾಣು)</b></td></tr> <!-- The mechanic has been repairing our refrigerator - Present perfect continuous tense -->
+  <tr><td>Is going</td><td>hOguttide/hOguttiddaane/Le <br><b>(ಹೋಗುತ್ತಿದೆ/ಹೋಗುತ್ತಿದ್ದಾನೆ/ಳೆ)</b></td><td>pOchu <br><b>(ಪೋಚು)</b></td><td>pOnDraandi <br><b>(ಪೋಂಡ್ರಾಂದಿ)</b></td><td>pOndi <br><b>(ಪೋಂದಿ)</b></td></tr>
+  <tr><td>Is</td><td>ide/iddaane/Le <br><b>(ಇದೆ/ಇದ್ದಾನೆ/ಳೆ)</b></td><td>indi <br><b>(ಇಂದಿ)</b></td><td>raandi <br><b>(ರಾಂದಿ)</b></td><td>ikkaandi <br><b>(ಇಕ್ಕಾಂದಿ)</b></td></tr>
+  <tr><td>Is there</td><td>ide <br><b>(ಇದೆ)</b></td><td>aapOchu <br><b>(ಆಪೋಚು)</b></td><td>raandi <br><b>(ರಾಂದಿ)</b></td><td>aagaandi <br><b>(ಆಗಾಂದಿ)</b></td></tr>
+  <tr><td>Lets</td><td>biTTubiDatte/biTTubiDuttaane/Le <br><b>(ಬಿಟ್ಟುಬಿಡತ್ತೆ/ಬಿಟ್ಟುಬಿಡುತ್ತಾನೆ/ಳೆ)</b></td><td>uTTuDu <br><b>(ಉಟ್ಟುಡು)</b></td><td>uTTuDaandi <br><b>(ಉಟ್ಟುಡಾಂದಿ)</b></td><td>uTTuDaaNu <br><b>(ಉಟ್ಟುಡಾಣು)</b></td></tr> <!-- My mother lets me go out with my friends - Simple present tense -->
+  <tr><td>Is coming</td><td>baruttide/baruttiddaane/Le <br><b>(ಬರುತ್ತಿದೆ/ಬರುತ್ತಿದ್ದಾನೆ/ಳೆ)</b></td><td>vaaraanDindi <br><b>(ವಾರಾಂಡಿಂದಿ)</b></td><td>vaaraanDraandi <br><b>(ವಾರಾಂಡ್ರಾಂದಿ)</b></td><td>vaaraanDikkandi <br><b>(ವಾರಾಂಡಿಕ್ಕಾಂದಿ)</b></td></tr> <!-- It will be raining at this time tomorrow - Future Continuous tense -->
+  <tr><td>Is keeping</td><td>iDuttiddaane/Le <br><b>(ಇಡುತ್ತಿದ್ದಾನೆ/ಳೆ)</b></td><td>vachdi <br><b>(ವಚ್ದಿ)</b></td><td>vayyaanDraandi <br><b>(ವಯ್ಯಾಂಡ್ರಾಂದಿ)</b></td><td>vayyaandi <br><b>(ವಯ್ಯಾಂದಿ)</b></td></tr> <!-- The gardener is working in the garden at this time - Present Continuous tense -->
+  <tr><td>Is scolding</td><td>bayyuttiddaane/Le <br><b>(ಬಯ್ಯುತ್ತಿದ್ದಾನೆ/ಳೆ)</b></td><td>vaijdi <br><b>(ವೈಜ್ದಿ)</b></td><td>vayyaanDraandi <br><b>(ವಯ್ಯಾಂಡ್ರಾಂದಿ)</b></td><td>vayyaandi <br><b>(ವಯ್ಯಾಂದಿ)</b></td></tr>
+
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="5">Situations where this usage is apt (ಈ ಬಳಕೆಗೆ ಸೂಕ್ತವಾದ ಸಂದರ್ಭಗಳು) :  While referring to (casual) He/She/It (ಅವನು/ಳು, ಇದು/ಅದು ಶಬ್ಧಗಳು ಪ್ರಯೋಗ ಆದಾಗ)</td>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="5">Present ending with 'raanDa/raaNa', Future with 'aanDa/aaNa' <br> (ವರ್ತಮಾನ 'ರಾಂಡ/ರಾಣ' ಇಂದ ಕೊನೆಯಾಗುವುದು, ಭವಿಷ್ಯ 'ಆಂಡ/ಆಣ' ಇಂದ)</td>
+
+  <tr><td>Is harassing</td><td>gOLeekOtiddaare <br><b>(ಗೋಳೀಕೋತಿದ್ದಾರೆ)</b></td><td>gOLaTkyanDa <br><b>(ಗೋಳಟ್ಕ್ಯಂಡ)</b></td><td>gOLaTkyOnDraanDa <br><b>(ಗೋಳಟ್ಕ್ಯೋಂಡ್ರಾಂಡ)</b></td><td>gOLaTkyOnDa <br><b>(ಗೋಳಟ್ಕ್ಯೋಂಡ)</b></td></tr>
+  <tr><td>Is protecting</td><td>kaapaaDuttiddaare <br><b>(ಕಾಪಾಡುತ್ತಿದ್ದಾರೆ)</b></td><td>kaapaaDna <br><b>(ಕಾಪಾಡ್ನ)</b></td><td>kaapaaDaanDraaNa <br><b>(ಕಾಪಾಡಾಂಡ್ರಾಣ)</b></td><td>kaapaaDaaNa <br><b>(ಕಾಪಾಡಾಣ)</b></td></tr>
+  <tr><td>(She) Is</td><td>iddaare <br><b>(ಇದ್ದಾರೆ)</b></td><td>inda <br><b>(ಇಂದ)</b></td><td>raanDa <br><b>(ರಾಂಡ)</b></td><td>ikkaanDa <br><b>(ಇಕ್ಕಾಂಡ)</b></td></tr>
+  <tr><td>(He) Is</td><td>iddaare <br><b>(ಇದ್ದಾರೆ)</b></td><td>inda <br><b>(ಇಂದ)</b></td><td>raaNa <br><b>(ರಾಣ)</b></td><td>ikkaaNa <br><b>(ಇಕ್ಕಾಣ)</b></td></tr>
+  <tr><td>Is coming</td><td>baruttiddaare <br><b>(ಬರುತ್ತಿದ್ದಾರೆ)</b></td><td>vanda <br><b>(ವಂದ)</b></td><td>vaaraanDraaNa <br><b>(ವಾರಾಂಡ್ರಾಣ)</b></td><td>vaaraaNa <br><b>(ವಾರಾಣ)</b></td></tr>
+
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="5">Situations where this usage is apt (ಈ ಬಳಕೆಗೆ ಸೂಕ್ತವಾದ ಸಂದರ್ಭಗಳು) : While referring to (With respect) He/She (ಅವರು ಶಬ್ಧ ಪ್ರಯೋಗ ಆದಾಗ)</td>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="5">Present ending with 'raanDa', Future with 'aanDa' <br> (ವರ್ತಮಾನ 'ರಾಂಡ' ಇಂದ ಕೊನೆಯಾಗುವುದು, ಭವಿಷ್ಯ 'ಆಂಡ' ಇಂದ)</td>
+
+  <tr><td>Are saving</td><td>kaapaaDuttiddeeya <br><b>(ಕಾಪಾಡುತ್ತಿದ್ದೀಯ)</b></td><td>kaapaaDna <br><b>(ಕಾಪಾಡ್ನ)</b></td><td>kaapaaDaanDraanDa <br><b>(ಕಾಪಾಡಾಂಡ್ರಾಂಡ)</b></td><td>kaapaaDaanDa <br><b>(ಕಾಪಾಡಾಂಡ)</b></td></tr>
+  <tr><td>Are mixing</td><td>kalesuttiddeeya <br><b>(ಕಲೆಸುತ್ತಿದ್ದೀಯ)</b></td><td>kalavna <br><b>(ಕಲವ್ನ)</b></td><td>kalvaanDraanDa <br><b>(ಕಲ್ವಾಂಡ್ರಾಂಡ)</b></td><td>kalvaanDa <br><b>(ಕಲ್ವಾಂಡ)</b></td></tr>
+  <tr><td>Are learning</td><td>kaliyuttiddeeya <br><b>(ಕಲಿಯುತ್ತಿದ್ದೀಯ)</b></td><td>kalta <br><b>(ಕಲ್ತ)</b></td><td>kalvaanDraanDa <br><b>(ಕಲ್ವಾಂಡ್ರಾಂಡ)</b></td><td>kalvaanDa <br><b>(ಕಲ್ವಾಂಡ)</b></td></tr>
+  <tr><td>Are walking</td><td>naDeyuttiddeeya <br><b>(ನಡೆಯುತ್ತಿದ್ದೀಯ)</b></td><td>naDanda <br><b>(ನಡಂದ)</b></td><td>naDvaanDraanDa <br><b>(ನಡ್ವಾಂಡ್ರಾಂಡ)</b></td><td>naDvaanDa <br><b>(ನಡ್ವಾಂಡ)</b></td></tr> <!-- Past simple - You walked -->
+  <tr><td>Are walking</td><td>naDeyuttiddeeya <br><b>(ನಡೆಯುತ್ತಿದ್ದೀಯ)</b></td><td>naDandinda <br><b>(ನಡಂದಿಂದ)</b></td><td>naDvaanDraanDa <br><b>(ನಡ್ವಾಂಡ್ರಾಂಡ)</b></td><td>naDvaanDa <br><b>(ನಡ್ವಾಂಡ)</b></td></tr> <!-- Past perfect - You had walked -->
+  <tr><td>Are walking</td><td>naDeyuttiddeeya <br><b>(ನಡೆಯುತ್ತಿದ್ದೀಯ)</b></td><td>naDvaanDinDa <br><b>(ನಡ್ವಾಂಡಿಂದ)</b></td><td>naDvaanDraanDa <br><b>(ನಡ್ವಾಂಡ್ರಾಂಡ)</b></td><td>naDvaanDa <br><b>(ನಡ್ವಾಂಡ)</b></td></tr> <!-- Past continuous - You were walking -->
+  <tr><td>Are walking</td><td>naDeyuttiddeeya <br><b>(ನಡೆಯುತ್ತಿದ್ದೀಯ)</b></td><td>naDvaanDEyinDa <br><b>(ನಡ್ವಾಂಡೇಯಿಂದ)</b></td><td>naDvaanDraanDa <br><b>(ನಡ್ವಾಂಡ್ರಾಂಡ)</b></td><td>naDvaanDa <br><b>(ನಡ್ವಾಂಡ)</b></td></tr> <!-- Past continuous perfect - You had been walking -->
+
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="5">Situations where this usage is apt (ಈ ಬಳಕೆಗೆ ಸೂಕ್ತವಾದ ಸಂದರ್ಭಗಳು) : While referring to You (ನೀನು  ಶಬ್ಧ ಪ್ರಯೋಗ ಆದಾಗ)</td>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="5">Past ending with 'ingo/ingLa', Present with 'aanDingo', Future with 'ngo/ingLa' <br> (ಭೂತ 'ಇಂಗೊ/ಇಂಗ್ಳ' ಇಂದ ಕೊನೆಯಾಗುವುದು, ವರ್ತಮಾನ 'ಆಂಡಿಂಗೊ' ಇಂದ, ಭವಿಷ್ಯ 'ನ್ಗೊ/ಇಂಗ್ಳ' ಇಂದ)</td>
+
+  <tr><td>Are writing</td><td>bareyuttiddeera <br><b>(ಬರೆಯುತ್ತಿದ್ದೀರ)</b></td><td>aLadningo <br><b>(ಅಳದ್ನಿಂಗೊ)</b></td><td>aLdaanDraanDingo <br><b>(ಅಳ್ದಾಂಡ್ರಾಂಡಿಂಗೊ)</b></td><td>aLdaanDingo <br><b>(ಅಳ್ದಾಂಡಿಂಗೊ)</b></td></tr> 
+  <tr><td>Are listening</td><td>kELisikoLLuttiddeera <br><b>(ಕೇಳಿಸಿಕೊಳ್ಳುತ್ತಿದ್ದೀರ)</b></td><td>kOLichkanDingo <br><b>(ಕೋಳಿಚ್ಕಂಡಿಂಗೊ)</b></td><td>kOLichkOnDraanDingo <br><b>(ಕೋಳಿಚ್ಕೋಂಡ್ರಾಂಡಿಂಗೊ)</b></td><td>kOLichkOngo <br><b>(ಕೋಳಿಚ್ಕೋಂಗೊ)</b></td></tr> 
+  <tr><td>Are telling</td><td>hELutteera <br><b>(ಹೇಳುತ್ತೀರ)</b></td><td>chonningLa? <br><b>(ಚೊನ್ನಿಂಗ್ಳ)</b></td><td>chollaanDingo <br><b>(ಚೊಲ್ಲಾಂಡಿಂಗೊ)</b></td><td>chollaanDingLa? <br><b>(ಚೊಲ್ಲಾಂಡಿಂಗ್ಳ)</b></td></tr> 
+  <tr><td>Are there</td><td>iddeera <br><b>(ಇದ್ದೀರ)</b></td><td>indingLa? <br><b>(ಇಂದಿಂಗ್ಳ)</b></td><td>raanDingo <br><b>(ರಾಂಡಿಂಗೊ)</b></td><td>ikkaanDingLa? <br><b>(ಇಕ್ಕಾಂಡಿಂಗ್ಳ)</b></td></tr> 
+  <tr><td>Have come</td><td>bandiddeera <br><b>(ಬಂದಿದ್ದೀರ)</b></td><td>vandingo <br><b>(ವಂದಿಂಗೊ)</b></td><td>vandraanDingo <br><b>(ವಂದ್ರಾಂಡಿಂಗೊ)</b></td><td>vaaraanDingo <br><b>(ವಾರಾಂಡಿಂಗೊ)</b></td></tr> 
+
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="5">Situations where this usage is apt (ಈ ಬಳಕೆಗೆ ಸೂಕ್ತವಾದ ಸಂದರ್ಭಗಳು) : While referring to (plural/singular with respect)You (ನೀವು ಶಬ್ಧ ಪ್ರಯೋಗ ಆದಾಗ)</td>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="5">Future with 'aandi/aaNe/aanDa' <br> (ಭವಿಷ್ಯ 'ಆಂದಿ/ಆಣೆ/ಆಂಡ' ಇಂದ ಕೊನೆಯಾಗುವುದು)</td>
+
+  <tr><td>Read</td><td>Odu <br><b>(ಓದು)</b></td><td>Odne <br><b>(ಓದ್ನೆ)</b></td><td>Odu <br><b>(ಓದು)</b></td><td>OdaaNe <br><b>(ಓದಾಣೆ)</b></td></tr>
+  <tr><td>Enough</td><td>saaku <br><b>(ಸಾಕು)</b></td><td>pOrmaachi <br><b>(ಪೋರ್ಮಾಚಿ)</b></td><td>pOru <br><b>(ಪೋರು)</b></td><td>pOrmaagaandi <br><b>(ಪೋರ್ಮಾಗಾಂದಿ)</b></td></tr>
+  <tr><td>Sit</td><td>kuutko <br><b>(ಕೂತ್ಕೊ)</b></td><td>ukkanda <br><b>(ಉಕ್ಕಂದ)</b></td><td>ukka <br><b>(ಉಕ್ಕ)</b></td><td>ukkaanDa <br><b>(ಉಕ್ಕಾಂಡ)</b></td></tr>
+  <tr><td>Need</td><td>bEku <br><b>(ಬೇಕು)</b></td><td>vONmaayindi <br><b>(ವೋಣ್ಮಾಯಿಂದಿ)</b></td><td>vONu <br><b>(ವೋಣು)</b></td><td>vONmaagaandi <br><b>(ವೋಣ್ಮಾಗಾಂದಿ)</b></td></tr>
+
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="5">Situations where this usage is apt (ಈ ಬಳಕೆಗೆ ಸೂಕ್ತವಾದ ಸಂದರ್ಭಗಳು) : Verbs that follow a noun (ನಾಮಪದವನ್ನು ಹಿಂಬಾಲಿಸುವ ಕ್ರಿಯಾಪದಗಳು)</td>
+  </table>
+</div>
+
+<div id="Variation_2" class="VariationTabContent">
+
+  <table class="Variations_Table" id="Variations_Table_2">
+  <tr><th>English</th>
+      <th>Kannada (ಕನ್ನಡ)</th>
+      <th style="border-right-style:none; text-align:right;">Sanketi </th><th style="border-left-style:none; text-align:left;">(ಸಂಕೇತಿ)</th></tr>
+
+  <tr><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Singular</td><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Singular (ಏಕವಚನ)</td>
+      <td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Singular (ಏಕವಚನ)</td>
+      <td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Plural (ಬಹುವಚನ)</td></tr>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="4">Adding 'ne'at the end will make singular form plural <br> (ಕೊನೆಯಲ್ಲಿ 'ನೆ' ಕೂಡಿಸಿದರೆ ಏಕವಚನ ರೂಪ ಬಹುವಚನವಾಗುತ್ತದೆ)</td>
+
+  <tr><td>(He/She) Allowed</td><td>biTTa/Lu <b>(ಬಿಟ್ಟ/ಳು)</b></td><td>oTTatti <b>(ಒಟ್ಟತ್ತಿ)</b></td><td>oTTattine <b>(ಒಟ್ಟತ್ತಿನೆ)</b></td></tr>
+  <tr><td>(He/She) Took care</td><td>nODikonDa/Lu <b>(ನೋಡಿಕೊಂಡ/ಳು)</b></td><td>paatkanDdi <b>(ಪಾತ್ಕಂಡ್ದಿ)</b></td><td>paatkanDdine <b>(ಪಾತ್ಕಂಡ್ದಿನೆ)</b></td></tr>
+  <tr><td>(He/She) Did</td><td>maaDida/Lu <b>(ಮಾಡಿದ/ಳು)</b></td><td>paNNatti <b>(ಪಣ್ಣತ್ತಿ)</b></td><td>paNNattine <b>(ಪಣ್ಣತ್ತಿನೆ)</b></td></tr>
+  <tr><td>(It/He/She) Will come</td><td>baratte/baruttaane/Le <b>(ಬರತ್ತೆ/ಬರುತ್ತಾನೆ/ಳೆ)</b></td><td>vaaraandi <b>(ವಾರಾಂದಿ)</b></td><td>vaaraanne <b>(ವಾರಾನ್ನೆ)</b></td></tr>
+  <tr><td>(It/He/She) Came</td><td>bantu/banda/Lu <b>(ಬಂತು/ಬಂದ/ಳು)</b></td><td>vandi <b>(ವಂದಿ)</b></td><td>vandine <b>(ವಂದಿನೆ)</b></td></tr>
+  <tr><td>(It/He/She) Did not come</td><td>(adu/avanu/Lu) baralilla <b>((ಅದು/ಅವನು/ಳು) ಬರಲಿಲ್ಲ)</b></td><td>vandille <b>(ವಂದಿಲ್ಲೆ)</b></td><td>vandilline <b>(ವಂದಿಲ್ಲಿನೆ)</b></td></tr>
+
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="4">Words that belong to above category (ಮೇಲಿನ ವರ್ಗಕ್ಕೆ ಸೇರಿದ ಪದಗಳು) : Verbs (ಕ್ರಿಯಾಪದಗಳು)</td>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="4">Adding 'amaake'at the end will make singular form plural <br> (ಕೊನೆಯಲ್ಲಿ 'ಅಮಾಕೆ' ಕೂಡಿಸಿದರೆ ಏಕವಚನ ರೂಪ ಬಹುವಚನವಾಗುತ್ತದೆ)</td>
+
+  <tr><td>Wife</td><td>henDati <b>(ಹೆಂಡತಿ)</b></td><td>haamDya <b>(ಹಾಂಡ್ಯ)</b></td><td>haamDyaamaake <b>(ಹಾಂಡ್ಯಾಮಾಕೆ)</b></td></tr>
+  <tr><td>Sister-in-law</td><td>naadini <b>(ನಾದಿನಿ)</b></td><td>naatna <b>(ನಾತ್ನ)</b></td><td>naatnaamaake <b>(ನಾತ್ನಾಮಾಕೆ)</b></td></tr>
+  <tr><td>Co-sister</td><td>vaaragitti <b>(ವಾರಗಿತ್ತಿ)</b></td><td>Oratta <b>(ಓರತ್ತ)</b></td><td>Orattaamaake <b>(ಓರತ್ತಾಮಾಕೆ)</b></td></tr>
+  <tr><td>Mother</td><td>taayi <b>(ತಾಯಿ)</b></td><td>taaya <b>(ತಾಯ)</b></td><td>taaymaake <b>(ತಾಯ್ಮಾಕೆ)</b></td></tr>
+  <tr><td>Father</td><td>tande <b>(ತಂದೆ)</b></td><td>tOpna <b>(ತೋಪ್ನ)</b></td><td>tOpnaamaake <b>(ತೋಪ್ನಾಮಾಕೆ)</b></td></tr>
+
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="4">Words that belong to above category (ಮೇಲಿನ ವರ್ಗಕ್ಕೆ ಸೇರಿದ ಪದಗಳು) : Relationships (ಸಂಬಂಧಗಳು)</td>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+ 
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="4">To get plural form, replace last letter of the word in singular form with 'ange' <br> (ಬಹುವಚನ  ಪಡೆಯಲು  ಏಕವಚನ ಪದದ  ಕೊನೆಯ ಅಕ್ಷರವನ್ನು'ಅಂಗೆ' ಇಂದ ಬದಲಾಯಿಸಿ)</td>
+
+  <tr><td>Country</td><td>dEsha <b>(ದೇಶ)</b></td><td>dEsho <b>(ದೇಶೊ)</b></td><td>dEshange <b>(ದೇಶಂಗೆ)</b></td></tr>
+  <tr><td>Day</td><td>dina <b>(ದಿನ)</b></td><td>dino <b>(ದಿನೊ)</b></td><td>dinange <b>(ದಿನಂಗೆ)</b></td></tr>
+  <tr><td>Box</td><td>Dabba <b>(ಡಬ್ಬ)</b></td><td>Dabbo <b>(ಡಬ್ಬೊ)</b></td><td>Dabbange <b>(ಡಬ್ಬಂಗೆ)</b></td></tr>
+  <tr><td>House</td><td>mane <b>(ಮನೆ)</b></td><td>ḥaa <b>(ಹಾ಼)</b></td><td>ḥaange <b>(ಹಾ಼ಂಗೆ)</b></td></tr>
+  <tr><td>Swan</td><td>hamsa <b>(ಹಂಸ)</b></td><td>hamso <b>(ಹಂಸೊ)</b></td><td>hamsange <b>(ಹಂಸಂಗೆ)</b></td></tr>
+  <tr><td>Life</td><td>jeeva <b>(ಜೀವ)</b></td><td>jeevo <b>(ಜೀವೊ)</b></td><td>jeevange <b>(ಜೀವಂಗೆ)</b></td></tr>
+  <tr><td>Tree</td><td>mara <b>(ಮರ)</b></td><td>maro <b>(ಮರೊ)</b></td><td>marange <b>(ಮರಂಗೆ)</b></td></tr>
+  <tr><td>Mountain</td><td>parvata <b>(ಪರ್ವತ)</b></td><td>parvato <b>(ಪರ್ವತೊ)</b></td><td>parvatange <b>(ಪರ್ವತಂಗೆ)</b></td></tr>
+  <tr><td>Wolf</td><td>tOLa <b>(ತೋಳ)</b></td><td>tOLo <b>(ತೋಳೊ)</b></td><td>tOLange <b>(ತೋಳಂಗೆ)</b></td></tr>
+  <tr><td>Week</td><td>vaara <b>(ವಾರ)</b></td><td>vaaro <b>(ವಾರೊ)</b></td><td>vaarange <b>(ವಾರಂಗೆ)</b></td></tr>
+
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="4">Words that belong to above category (ಮೇಲಿನ ವರ್ಗಕ್ಕೆ ಸೇರಿದ ಪದಗಳು) : Nouns (ನಾಮಪದಗಳು)</td>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="4">To get plural form, replace last letter of the word in singular form with 'aake' <br> (ಬಹುವಚನ  ಪಡೆಯಲು  ಏಕವಚನ ಪದದ  ಕೊನೆಯ ಅಕ್ಷರವನ್ನು'ಆಕೆ' ಇಂದ ಬದಲಾಯಿಸಿ)</td>
+
+  <tr><td>Miser</td><td>jipuNa <b>(ಜಿಪುಣ)</b></td><td>jipuNo <b>(ಜಿಪುಣೊ)</b></td><td>jipuNaake <b>(ಜಿಪುಣಾಕೆ)</b></td></tr>
+  <tr><td>Person</td><td>manuShya <b>(ಮನುಷ್ಯ)</b></td><td>manuShyo <b>(ಮನುಷ್ಯೊ)</b></td><td>manuShyaake <b>(ಮನುಷ್ಯಾಕೆ)</b></td></tr>
+  <tr><td>Expert</td><td>nipuNa <b>(ನಿಪುಣ)</b></td><td>nipuNo <b>(ನಿಪುಣೊ)</b></td><td>nipuNaake <b>(ನಿಪುಣಾಕೆ)</b></td></tr>
+  <tr><td>Rough (person)</td><td>oDDa <b>(ಒಡ್ಡ)</b></td><td>oDDo <b>(ಒಡ್ಡೊ)</b></td><td>oDDaake <b>(ಒಡ್ಡಾಕೆ)</b></td></tr>
+  <tr><td>Child</td><td>magu <b>(ಮಗು)</b></td><td>paije <b>(ಪೈಜೆ)</b></td><td>paijaake <b>(ಪೈಜಾಕೆ)</b></td></tr>
+  <tr><td>Fool</td><td>pedda <b>(ಪೆದ್ದ)</b></td><td>peddo <b>(ಪೆದ್ದೊ)</b></td><td>peddaake <b>(ಪೆದ್ದಾಕೆ)</b></td></tr>
+  <tr><td>Man</td><td>ganDasu <b>(ಗಂಡಸು)</b></td><td>puruSho <b>(ಪುರುಷೊ)</b></td><td>puruShaake <b>(ಪುರುಷಾಕೆ)</b></td></tr>
+
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="4">Words that belong to above category (ಮೇಲಿನ ವರ್ಗಕ್ಕೆ ಸೇರಿದ ಪದಗಳು) : Adjectives (ಗುಣವಾಚಕಗಳು)</td>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="4">Plural form ending with 'ge' <br> (ಬಹುವಚನ 'ಗೆ' ಇಂದ ಕೊನೆಯಾಗುತ್ತದೆ)</td>
+
+  <tr><td>Toy</td><td>aaTasaamaanu <b>(ಆಟಸಾಮಾನು)</b></td><td>aaTasaamaani <b>(ಆಟಸಾಮಾನಿ)</b></td><td>aaTasaamaange <b>(ಆಟಸಾಮಾನ್ಗೆ)</b></td></tr>
+  <tr><td>It/He/She</td><td>adu/avanu/Lu <b>(ಅದು/ಅವನು/ಳು)</b></td><td>adi <b>(ಅದಿ)</b></td><td>avge <b>(ಅವ್ಗೆ)</b></td></tr>
+  <tr><td>Leaf</td><td>ele <b>(ಎಲೆ)</b></td><td>ile <b>(ಇಲೆ)</b></td><td>ilege <b>(ಇಲೆಗೆ)</b></td></tr>
+  <tr><td>Rat</td><td>ili <b>(ಇಲಿ)</b></td><td>ili <b>(ಇಲಿ)</b></td><td>ilige <b>(ಇಲಿಗೆ)</b></td></tr>
+  <tr><td>Deer</td><td>jinke <b>(ಜಿಂಕೆ)</b></td><td>jinke <b>(ಜಿಂಕೆ)</b></td><td>jinkEge <b>(ಜಿಂಕೇಗೆ)</b></td></tr>
+  <tr><td>Leg</td><td>kaalu <b>(ಕಾಲು)</b></td><td>kaali <b>(ಕಾಲಿ)</b></td><td>kaalge <b>(ಕಾಲ್ಗೆ)</b></td></tr>
+  <tr><td>Hand</td><td>kaiyyi <b>(ಕೈಯ್ಯಿ)</b></td><td>kai <b>(ಕೈ)</b></td><td>kaige <b>(ಕೈಗೆ)</b></td></tr>
+  <tr><td>Window</td><td>kiTaki <b>(ಕಿಟಕಿ)</b></td><td>kiTaki <b>(ಕಿಟಕಿ)</b></td><td>kiTakeege <b>(ಕಿಟಕೀಗೆ)</b></td></tr>
+  <tr><td>Sheep</td><td>kuri <b>(ಕುರಿ)</b></td><td>kuri <b>(ಕುರಿ)</b></td><td>kureege <b>(ಕುರೀಗೆ)</b></td></tr>
+  <tr><td>Cup</td><td>lOTa <b>(ಲೋಟ)</b></td><td>lOTa <b>(ಲೋಟ)</b></td><td>lOTaage <b>(ಲೋಟಾಗೆ)</b></td></tr>
+  <tr><td>I</td><td>naanu <b>(ನಾನು)</b></td><td>naa <b>(ನಾ)</b></td><td>nange <b>(ನಂಗೆ)</b></td></tr>
+  <tr><td>River</td><td>nadi <b>(ನದಿ)</b></td><td>nadi <b>(ನದಿ)</b></td><td>nadeege <b>(ನದೀಗೆ)</b></td></tr>
+  <tr><td>Bird</td><td>pakShi <b>(ಪಕ್ಷಿ)</b></td><td>pakShi <b>(ಪಕ್ಷಿ)</b></td><td>pakSheege <b>(ಪಕ್ಷೀಗೆ)</b></td></tr>
+  <tr><td>Tooth</td><td>hallu <b>(ಹಲ್ಲು)</b></td><td>palli <b>(ಪಲ್ಲಿ)</b></td><td>palge <b>(ಪಲ್ಗೆ)</b></td></tr>
+  <tr><td>Woman</td><td>hengasu <b>(ಹೆಂಗಸು)</b></td><td>ponDaaTi <b>(ಪೊಂಡಾಟಿ)</b></td><td>ponDaaTeege <b>(ಪೊಂಡಾಟೀಗೆ)</b></td></tr>
+  <tr><td>Cow</td><td>hasu <b>(ಹಸು)</b></td><td>poshu <b>(ಪೊಶು)</b></td><td>poshuuge <b>(ಪೊಶೂಗೆ)</b></td></tr>
+  <tr><td>Animal</td><td>praaNi <b>(ಪ್ರಾಣಿ)</b></td><td>praaNi <b>(ಪ್ರಾಣಿ)</b></td><td>praaNeege <b>(ಪ್ರಾಣೀಗೆ)</b></td></tr>
+
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="4">Words that belong to above category (ಮೇಲಿನ ವರ್ಗಕ್ಕೆ ಸೇರಿದ ಪದಗಳು) : Animals, birds, body (ಪ್ರಾಣಿಗಳು, ಪಕ್ಷಿಗಳು, ದೇಹ)</td>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="4">Singular and Plural form ending with 'De' <br> (ಏಕವಚನ ಮತ್ತು ಬಹುವಚನ 'ಡೆ' ಇಂದ ಕೊನೆಯಾಗುತ್ತದೆ)</td>
+
+  <tr><td>Its/His/Her</td><td>adara/avana/La <b>(ಅದರ/ಅವನ/ಳ)</b></td><td>attanDe <b>(ಅತ್ತಂಡೆ)</b></td><td>agaDe <b>(ಅಗಡೆ)</b></td></tr>
+  <tr><td>My</td><td>nanna <b>(ನನ್ನ)</b></td><td>enDe <b>(ಎಂಡೆ)</b></td><td>engDe <b>(ಎಂಗ್ಡೆ)</b></td></tr>
+  <tr><td>Child's</td><td>maguvina <b>(ಮಗುವಿನ)</b></td><td>paijEnDe <b>(ಪೈಜೇಂಡೆ)</b></td><td>paijaakDe <b>(ಪೈಜಾಕ್ಡೆ)</b></td></tr>
+  <tr><td>Your</td><td>ninna <b>(ನಿನ್ನ)</b></td><td>unDe <b>(ಉಂಡೆ)</b></td><td>ungDe <b>(ಉಂಗ್ಡೆ)</b></td></tr>
+  <tr><td>Maid Servant's</td><td>kelasadavaLa <b>(ಕೆಲಸದವಳ)</b></td><td>vaLLaaTeenDe <b>(ವಳ್ಳಾಟೀಂಡೆ)</b></td><td>vaLLaaTeegDe <b>(ವಳ್ಳಾಟೀಗ್ಡೆ)</b></td></tr>
+
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="4">Words that belong to above category (ಮೇಲಿನ ವರ್ಗಕ್ಕೆ ಸೇರಿದ ಪದಗಳು) : Words that indicate possession (ಸ್ವಾಧೀನ ಸೂಚಿಸುವ ಪದಗಳು)</td>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="4">Singular and Plural form ending with 'DEdi' <br> (ಏಕವಚನ ಮತ್ತು ಬಹುವಚನ 'ಡೇದಿ' ಇಂದ ಕೊನೆಯಾಗುತ್ತದೆ)</td>
+
+  <tr><td>His/Hers</td><td>avanadu/avaLadu <b>(ಅವನದು/ಅವಳದು)</b></td><td>attanDEdi <b>(ಅತ್ತಂಡೇದಿ)</b></td><td>agaDEdi <b>(ಅಗಡೇದಿ)</b></td></tr>
+  <tr><td>Mine</td><td>nannadu <b>(ನನ್ನದು)</b></td><td>enDEdi <b>(ಎಂಡೇದಿ)</b></td><td>engDEdi <b>(ಎಂಗ್ಡೇದಿ)</b></td></tr>
+  <tr><td>Yours</td><td>ninnadu <b>(ನಿನ್ನದು)</b></td><td>unDEdi <b>(ಉಂಡೇದಿ)</b></td><td>ungDEdi <b>(ಉಂಗ್ಡೇದಿ)</b></td></tr>
+
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="4">Words that belong to above category (ಮೇಲಿನ ವರ್ಗಕ್ಕೆ ಸೇರಿದ ಪದಗಳು) : Possessive pronouns (ಸ್ವಾಮ್ಯಸೂಚಕ ಸರ್ವನಾಮಗಳು)</td>
+
+  </table>
+
+</div>
+
+<div id="Variation_3" class="VariationTabContent">
+
+  <table class="Variations_Table" id="Variations_Table_3">
+  <tr><th>English</th>
+      <th>Kannada (ಕನ್ನಡ)</th>
+      <th style="border-right-style:none;"></th> 
+      <th style="border-right-style:none;border-left-style:none;text-align:center;">Sanketi (ಸಂಕೇತಿ)</th>
+      <th style="border-left-style:none;"></th></tr>
+
+  <tr><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Male</td><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Male (ಪುಲ್ಲಿಂಗ)</td>
+      <td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Male (ಪುಲ್ಲಿಂಗ)</td>
+      <td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Female (ಸ್ತ್ರೀಲಿಂಗ)</td>
+      <td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Neuter (ನಪುಂಸಕಲಿಂಗ)</td></tr>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="5">Forms that dont change in any language <br> (ಯಾವ ಭಾಷೆಯಲ್ಲೂ ಬದಲಾಗದ ರೂಪಗಳು)</td>
+  <tr><td>Their</td><td>avara <b>(ಅವರ)</b></td><td>agaDe <b>(ಅಗಡೆ)</b></td><td>agaDe <b>(ಅಗಡೆ)</b></td><td>agaDe <b>(ಅಗಡೆ)</b></td></tr> <!-- agaDe paijaake -->
+  <tr><td>Theirs?</td><td>avaraddo? <b>(ಅವರದ್ದೊ?)</b></td><td>agaDEdo? <b>(ಅಗಡೇದೊ?)</b></td><td>agaDEdo? <b>(ಅಗಡೇದೊ?)</b></td><td>agaDEdo? <b>(ಅಗಡೇದೊ?)</b></td></tr> <!-- praaNeegDEdo/agaDEdo hejje? -->
+  <tr><td>Wrote?</td><td>baradya? <b>(ಬರದ್ಯ)</b></td><td>aLdanya? <b>(ಅಳ್ದನ್ಯ)</b></td><td>aLdanya? <b>(ಅಳ್ದನ್ಯ)</b></td><td>-</td></tr>
+  <tr><td>My</td><td>nanna <b>(ನನ್ನ)</b></td><td>enDe <b>(ಎಂಡೆ)</b></td><td>enDe <b>(ಎಂಡೆ)</b></td><td>-</td></tr> 
+  <tr><td>Is walking/moving</td><td>naDeetide <b>(ನಡೀತಿದೆ)</b></td><td>naDvaanDraandi <b>(ನಡ್ವಾಂಡ್ರಾಂದಿ)</b></td><td>naDvaanDraandi <b>(ನಡ್ವಾಂಡ್ರಾಂದಿ)</b></td><td>naDvaanDraandi <b>(ನಡ್ವಾಂಡ್ರಾಂದಿ)</b></td></tr> <!-- gaDiyaaro naDvaanDraandi -->
+  <tr><td>Ours</td><td>nammadu <b>(ನಮ್ಮದು)</b></td><td>namDEdi <b>(ನಂಡೇದಿ)</b></td><td>namDEdi <b>(ನಂಡೇದಿ)</b></td><td>-</td></tr> 
+  <tr><td>Do</td><td>maaDu <b>(ಮಾಡು)</b></td><td>paNNi <b>(ಪಣ್ಣಿ)</b></td><td>paNNi <b>(ಪಣ್ಣಿ)</b></td><td>-</td></tr>
+  <tr><td>Read</td><td>Odi <b>(ಓದಿ)</b></td><td>Odango <b>(ಓದಂಗೊ)</b></td><td>Odango <b>(ಓದಂಗೊ)</b></td><td>-</td></tr>
+  <tr><td>Your</td><td>nimma <b>(ನಿಮ್ಮ)</b></td><td>ungDe <b>(ಉಂಗ್ಡೆ)</b></td><td>ungDe <b>(ಉಂಗ್ಡೆ)</b></td><td>-</td></tr> 
+  <tr><td>Come</td><td>baa <b>(ಬಾ)</b></td><td>vaa <b>(ವಾ)</b></td><td>vaa <b>(ವಾ)</b></td><td>vaa <b>(ವಾ)</b></td></tr> 
+  <tr><td>Not coming?</td><td>baralwa? <b>(ಬರಲ್ವ)</b></td><td>varlya? <b>(ವರ್ಲ್ಯ?)</b></td><td>varlya? <b>(ವರ್ಲ್ಯ?)</b></td><td>varlya? <b>(ವರ್ಲ್ಯ?)</b></td></tr> <!-- bus varlya? -->
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="5">Words that belong to above category (ಮೇಲಿನ ವರ್ಗಕ್ಕೆ ಸೇರಿದ ಪದಗಳು) :<br> Common gender pronouns, Verbs (ಎರಡು ಲಿಂಗಕ್ಕೂ ಹೊಂದುವ ಸರ್ವನಾಮಗಳು, ಕ್ರಿಯಾಪದಗಳು)</br></td>
+
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="5">Forms that change in all languages <br> (ಎಲ್ಲಾ ಭಾಷೆಯಲ್ಲೂ ಬದಲಾಗುವ ರೂಪಗಳು)</td>
+  <tr><td>Grandfather</td><td>taata <b>(ತಾತ)</b></td><td>taato <b>(ತಾತೊ)</b></td><td>ajji <b>(ಅಜ್ಜಿ)</b></td><td>pOShakaagDe pOShako <b>(ಪೋಷಕಾಗ್ಡೆ ಪೋಷಕೊ)</b></td></tr>
+  <tr><td>Elder Brother</td><td>aNNa <b>(ಅಣ್ಣ)</b></td><td>aNNo <b>(ಅಣ್ಣೊ)</b></td><td>akko <b>(ಅಕ್ಕೊ)</b></td><td>oDahuTneevge <b>(ಒಡಹುಟ್ನೀವ್ಗೆ)</b></td></tr>
+  <tr><td>His</td><td>avanaddu <b>(ಅವನದ್ದು)</b></td><td>attanDEdi <b>(ಅತ್ತಂಡೇದಿ)</b></td><td>attanDEdi <b>(ಅತ್ತಂಡೇದಿ)</b></td><td>attattEdi <b>(ಅತ್ತತ್ತೇದಿ)</b></td></tr>
+  <tr><td>Husband</td><td>ganDa <b>(ಗಂಡ)</b></td><td>haamNya <b>(ಹಾಂಣ್ಯ)</b></td><td>haamDya <b>(ಹಾಂಡ್ಯ)</b></td><td>sangaati <b>(ಸಂಗಾತಿ)</b></td></tr>
+  <tr><td>His</td><td>ivanaddu <b>(ಇವನದ್ದು)</b></td><td>ittanDEdi <b>(ಇತ್ತಂಡೇದಿ)</b></td><td>ittanDEdi <b>(ಇತ್ತಂಡೇದಿ)</b></td><td>ittattEdi <b>(ಇತ್ತತ್ತೇದಿ)</b></td></tr> <!-- This is His -->
+  <tr><td>Nephew</td><td>sOdaraLiya <b>(ಸೋದರಳಿಯ)</b></td><td>marmaapuLLe <b>(ಮರ್ಮಾಪುಳ್ಳೆ)</b></td><td>marmaapoNNu <b>(ಮರ್ಮಾಪೊಣ್ಣು)</b></td><td>oDahuTneevgDe paijaake <b>(ಒಡಹುಟ್ನೀವ್ಗ್ಡೆ ಪೈಜಾಕೆ)</b></td></tr>
+  <tr><td>Son</td><td>maga <b>(ಮಗ)</b></td><td>puLLe <b>(ಪುಳ್ಳೆ)</b></td><td>poNNu <b>(ಪೊಣ್ಣು)</b></td><td>paijaake <b>(ಪೈಜಾಕೆ)</b></td></tr>
+  <tr><td>Ox</td><td>ettu <b>(ಎತ್ತು)</b></td><td>etti <b>(ಎತ್ತಿ)</b></td><td>poshu <b>(ಪೊಶು)</b></td><td>praaNi <b>(ಪ್ರಾಣಿ)</b></td></tr>
+  <tr><td>Man</td><td>ganDu <b>(ಗಂಡು)</b></td><td>puruSho <b>(ಪುರುಷೊ)</b></td><td>ponDaaTi <b>(ಪೊಂಡಾಟಿ)</b></td><td>manuShyo <b>(ಮನುಷ್ಯೊ)</b></td></tr>
+  <tr><td>Grandson</td><td>mommaga <b>(ಮೊಮ್ಮಗ)</b></td><td>pyaaro <b>(ಪ್ಯಾರೊ)</b></td><td>pOti <b>(ಪೋತಿ)</b></td><td>paijaakDe paijaake <b>(ಪೈಜಾಕ್ಡೆ ಪೈಜಾಕೆ)</b></td></tr>
+  <tr><td>Father</td><td>tande <b>(ತಂದೆ)</b></td><td>tOpna <b>(ತೋಪ್ನ)</b></td><td>taaya <b>(ತಾಯ)</b></td><td>pOShako <b>(ಪೋಷಕೊ)</b></td></tr>
+  <tr><td>Younger Brother</td><td>tamma <b>(ತಮ್ಮ)</b></td><td>tambyaano <b>(ತಂಬ್ಯಾನೊ)</b></td><td>tangyaanve <b>(ತಂಗ್ಯಾನ್ವೆ)</b></td><td>oDahuTneevge <b>(ಒಡಹುಟ್ನೀವ್ಗೆ)</b></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="5">Words that belong to above category (ಮೇಲಿನ ವರ್ಗಕ್ಕೆ ಸೇರಿದ ಪದಗಳು) :<br> Nouns, a few pronouns (ನಾಮಪದಗಳು, ಕೆಲವು ಸರ್ವನಾಮಗಳು)</br></td>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="5">Forms that change only in Sanketi<br> (ಸಂಕೇತಿಯಲ್ಲಿ ಮಾತ್ರ ಬದಲಾಗುವ ರೂಪಗಳು)</td>
+  <tr><td>Cousin</td><td>sOdara sambandhi <b>(ಸೋದರ ಸಂಬಂಧಿ)</b></td><td>ammaambu <b>(ಅಮ್ಮಾಂಬು)</b></td><td>ammange <b>(ಅಮ್ಮಂಗೆ)</b></td><td>-</td></tr>
+  <tr><td>Younger one</td><td>chikkavaru <b>(ಚಿಕ್ಕವರು)</b></td><td>chiritEvọ <b>(ಚಿರಿತೇವೊ಼)</b></td><td>chiritEve <b>(ಚಿರಿತೇವೆ)</b></td><td>-</td></tr>
+  <tr><td>Lonely person</td><td>obbare <b>(ಒಬ್ಬರೆ)</b></td><td>ortne <b>(ಒರ್ತ್ನೆ)</b></td><td>ortLe <b>(ಒರ್ತ್ಳೆ)</b></td><td>onDe<b>(ಒಂಡೆ)</b></td></tr> <!-- ortne raaNa -->
+  <tr><td>One person</td><td>obbaru <b>(ಒಬ್ಬರು)</b></td><td>ortvọ <b>(ಒರ್ತ್ವೊ಼)</b></td><td>ortve <b>(ಒರ್ತ್ವೆ)</b></td><td>-</td></tr>
+  <tr><td>Elderly</td><td>doDDavaru <b>(ದೊಡ್ಡವರು)</b></td><td>perivọ <b>(ಪೆರಿವೊ಼)</b></td><td>perive <b>(ಪೆರಿವೆ)</b></td><td>-</td></tr>
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="5">Words that belong to above category (ಮೇಲಿನ ವರ್ಗಕ್ಕೆ ಸೇರಿದ ಪದಗಳು) : <br>Relationships (ಸಂಬಂಧಗಳು)</br></td>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="5">Forms that change only in Kannada<br> (ಕನ್ನಡದಲ್ಲಿ ಮಾತ್ರ ಬದಲಾಗುವ ರೂಪಗಳು)</td>
+  <tr><td>Chased</td><td>aTTisikonDu banda <b>(ಅಟ್ಟಿಸಿಕೊಂಡು ಬಂದ)</b></td><td>aTTichkanDvandi <b>(ಅಟ್ಟಿಚ್ಕಂಡ್ವಂದಿ)</b></td><td>aTTichkanDvandi <b>(ಅಟ್ಟಿಚ್ಕಂಡ್ವಂದಿ)</b></td><td>aTTichkanDvandi <b>(ಅಟ್ಟಿಚ್ಕಂಡ್ವಂದಿ)</b></td></tr>
+  <tr><td>Told?</td><td>hELidana? <b>(ಹೇಳಿದನ?)</b></td><td>chollatta? <b>(ಚೊಲ್ಲತ್ತ?)</b></td><td>chollatta? <b>(ಚೊಲ್ಲತ್ತ?)</b></td><td>-</td></tr>
+  <tr><td>Stopped</td><td>ninta <b>(ನಿಂತ)</b></td><td>ninDdi <b>(ನಿಂಡ್ದಿ)</b></td><td>ninDdi <b>(ನಿಂಡ್ದಿ)</b></td><td>ninDdi <b>(ನಿಂಡ್ದಿ)</b></td></tr> <!-- he stopped, she stopped, rain/train stopped -->
+  <tr><td>Suffered</td><td>oddaaDida <b>(ಒದ್ದಾಡಿದ)</b></td><td>oddaaDatti <b>(ಒದ್ದಾಡತ್ತಿ)</b></td><td>oddaaDatti <b>(ಒದ್ದಾಡತ್ತಿ)</b></td><td>oddaaDatti <b>(ಒದ್ದಾಡತ್ತಿ)</b></td></tr>
+  <tr><td>Started</td><td>horaTa <b>(ಹೊರಟ)</b></td><td>parpaTdi <b>(ಪರ್ಪಟ್ದಿ)</b></td><td>parpaTdi <b>(ಪರ್ಪಟ್ದಿ)</b></td><td>parpaTdi <b>(ಪರ್ಪಟ್ದಿ)</b></td></tr>
+  <tr><td>Went</td><td>hOda <b>(ಹೋದ)</b></td><td>pOchu <b>(ಪೋಚು)</b></td><td>pOchu <b>(ಪೋಚು)</b></td><td>pOchu <b>(ಪೋಚು)</b></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="5">Words that belong to above category (ಮೇಲಿನ ವರ್ಗಕ್ಕೆ ಸೇರಿದ ಪದಗಳು) : <br>Gender sensitive verbs (ಲಿಂಗಕ್ಕೆ ತಕ್ಕಂತೆ ಬದಲಾಗುವ ಕ್ರಿಯಾಪದಗಳು)</br></td>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="5">Forms that dont change only in Sanketi<br> (ಸಂಕೇತಿಯಲ್ಲಿ  ಮಾತ್ರ ಬದಲಾಗದ ರೂಪಗಳು)</td>
+  <tr><td>Him?</td><td>avano? <b>(ಅವನೊ?)</b></td><td>ado? <b>(ಅದೊ?)</b></td><td>ado? <b>(ಅದೊ?)</b></td><td>ado? <b>(ಅದೊ?)</b></td></tr> <!-- Is it Him?/Her?/That? , avano/avaLo/ado? -->
+  <tr><td>Him</td><td>avanannu <b>(ಅವನನ್ನು)</b></td><td>attanne <b>(ಅತ್ತನ್ನೆ)</b></td><td>attanne <b>(ಅತ್ತನ್ನೆ)</b></td><td>attanne <b>(ಅತ್ತನ್ನೆ)</b></td></tr>
+  <tr><td>Himself</td><td>avana <b>(ಅವನ)</b></td><td>attanDe <b>(ಅತ್ತಂಡೆ)</b></td><td>attanDe <b>(ಅತ್ತಂಡೆ)</b></td><td>attanDe <b>(ಅತ್ತಂಡೆ)</b></td></tr> <!-- attanDe paaDakki - By himself -->
+  <tr><td>His</td><td>avana <b>(ಅವನ)</b></td><td>attanDe <b>(ಅತ್ತಂಡೆ)</b></td><td>attanDe <b>(ಅತ್ತಂಡೆ)</b></td><td>attanDe <b>(ಅತ್ತಂಡೆ)</b></td></tr> <!-- attanDe iShTo - His/Her/Its wish -->
+  <tr><td>He</td><td>ivanu <b>(ಇವನು)</b></td><td>idi <b>(ಇದಿ)</b></td><td>idi <b>(ಇದಿ)</b></td><td>idi <b>(ಇದಿ)</b></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="5">Words that belong to above category (ಮೇಲಿನ ವರ್ಗಕ್ಕೆ ಸೇರಿದ ಪದಗಳು) : <br>Pronouns (ಸರ್ವನಾಮಗಳು)</br></td>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="5">Forms that dont change only in Kannada<br> (ಕನ್ನಡದಲ್ಲಿ  ಮಾತ್ರ ಬದಲಾಗದ ರೂಪಗಳು)</td>
+  <tr><td>Just him</td><td>avaraaytu <b>(ಅವರಾಯ್ತು)</b></td><td>avanaachi <b>(ಅವನಾಚಿ)</b></td><td>avaLaachi <b>(ಅವಳಾಚಿ)</b></td><td>-</td></tr> <!-- avaraaytu avara paaDaaytu -->
+  <tr><td>For him</td><td>avarige <b>(ಅವರಿಗೆ)</b></td><td>avanakki <b>(ಅವನಕ್ಕಿ)</b></td><td>avaLakki <b>(ಅವಳಕ್ಕಿ)</b></td><td>-</td></tr>
+  <tr><td>His</td><td>avara <b>(ಅವರ)</b></td><td>avanDe <b>(ಅವಂಡೆ)</b></td><td>avDe <b>(ಅವ್ಡೆ)</b></td><td>-</td></tr>
+  <tr><td>His</td><td>avaraddu <b>(ಅವರಿಗೆ)</b></td><td>avanDEdi <b>(ಅವಂಡೇದಿ)</b></td><td>avDEdi <b>(ಅವ್ಡೇದಿ)</b></td><td>-</td></tr>
+  <tr><td>He only/himself</td><td>avarE <b>(ಅವರೇ)</b></td><td>avanE <b>(ಅವನೇ)</b></td><td>avaLE <b>(ಅವಳೇ)</b></td><td>-</td></tr>
+  <tr><td>He</td><td>avaru <b>(ಅವರು)</b></td><td>avọ <b>(ಅವೊ಼)</b></td><td>ave <b>(ಅವೆ)</b></td><td>-</td></tr>
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="5">Words that belong to above category (ಮೇಲಿನ ವರ್ಗಕ್ಕೆ ಸೇರಿದ ಪದಗಳು) :<br> Pronouns addressed with respect (ಮರ್ಯಾದೆ ಕೊಟ್ಟು ಸಂಬೋಧಿಸುವ ಸರ್ವನಾಮಗಳು)<br></td>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-left-style:none;"></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="5">Forms that dont change only in English <br> (ಇಂಗ್ಲಿಷ್ ನಲ್ಲಿ  ಮಾತ್ರ ಬದಲಾಗದ ರೂಪಗಳು)</td>
+  <tr><td>Take</td><td>togOLo <b>(ತೊಗೋಳೊ)</b></td><td>ankyODo <b>(ಅಂಕ್ಯೋಡೊ)</b></td><td>ankyODe <b>(ಅಂಕ್ಯೋಡೆ)</b></td><td>ankyo <b>(ಅಂಕ್ಯೊ)</b></td></tr>
+  <tr><td>Darling</td><td>bangaara <b>(ಬಂಗಾರ)</b></td><td>bangaaro <b>(ಬಂಗಾರೊ)</b></td><td>bangaari <b>(ಬಂಗಾರಿ)</b></td><td>-</td></tr>
+  <tr><td>Go, get lost</td><td>hOgOlo <b>(ಹೋಗೋಲೊ)</b></td><td>pODODo <b>(ಪೋಡೋಡೊ)</b></td><td>pODEDe <b>(ಪೋಡೇಡೆ)</b></td><td>ankyo <b>(ಅಂಕ್ಯೊ)</b></td></tr>
+  <tr><td>Sing</td><td>haaDappa <b>(ಹಾಡಪ್ಪ)</b></td><td>paaDappa <b>(ಪಾಡಪ್ಪ)</b></td><td>paaDamma <b>(ಪಾಡಮ್ಮ)</b></td><td>-</td></tr>
+  <tr><td>Friend</td><td>snEhita <b>(ಸ್ನೇಹಿತ)</b></td><td>snEhito <b>(ಸ್ನೇಹಿತೊ)</b></td><td>snEhite <b>(ಸ್ನೇಹಿತೆ)</b></td><td>-</td></tr>
+  <tr><td>Come</td><td>banro <b>(ಬನ್ರೊ)</b></td><td>vaarangODo <b>(ವಾರಂಗೋಡೊ)</b></td><td>vaarangODe <b>(ವಾರಂಗೋಡೆ)</b></td><td>-</td></tr>
+  <tr><td class="Variations_Table_2_Sub_Footer_Text" COLSPAN="5">Words that belong to above category (ಮೇಲಿನ ವರ್ಗಕ್ಕೆ ಸೇರಿದ ಪದಗಳು) : <br>Common gender nouns, Verbs indicating affection or of casual/disrespectful nature<br>(ಎರಡು ಲಿಂಗಕ್ಕೂ ಸೇರಿದ ನಾಮಪದಗಳು, ಅಕ್ಕರೆ ತೋರುವ, ಸಲಿಗೆ/ಮರ್ಯಾದೆ ರಹಿತವಾದ ಕ್ರಿಯಾಪದಗಳು)</br></td>
+  </table>
+</div>
+
+<div id="Variation_4" class="VariationTabContent">
+  <table class="Variations_Table" id="Variations_Table_4">
+
+  <tr><th>Addressing type <br>(ಸಂಬೋಧಿಸುವ ಬಗೆ)</th>
+      <th>English</th>
+      <th>Kannada (ಕನ್ನಡ)</th>
+      <th>Sanketi (ಸಂಕೇತಿ)</th></tr>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style=border-left-style:none;"></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="5">Table 1 (ಟೇಬಲ್ ೧)</td>
+
+  <tr><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Affection (ಪ್ರೀತಿ)</td>
+      <td>Sit (dear)</td><td>kuutkOppa <b>(ಕೂತ್ಕೋಪ್ಪ)</b></td><td>ukkaappa <b>(ಉಕ್ಕಾಪ್ಪ)</b></td></tr>
+  <tr><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Disrespect (ಔಮರ್ಯಾದೆ)</td>
+      <td>Sit (condescendingly)</td><td>kuutkOLoLe <b>(ಕೂತ್ಕೋಳೊಲೆ)</b></td><td>ukkaaDoDo <b>(ಉಕ್ಕಾಡೊಡೊ)</b></td></tr>
+  <tr><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Liberty (ಸಲಿಗೆ)</td>
+      <td>Sit (man)</td><td>kuutkOLo <b>(ಕೂತ್ಕೋಳೊ)</b></td><td>ukkaaDo <b>(ಉಕ್ಕಾಡೊ)</b></td></tr>
+  <tr><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">No feeling (ಭಾವನೆ ರಹಿತ)</td>
+      <td>Sit</td><td>kuutko <b>(ಕೂತ್ಕೊ)</b></td><td>ukka <b>(ಉಕ್ಕ)</b></td></tr>
+  <tr><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">With respect (ಮರ್ಯಾದೆ ಸಹಿತ)</td>
+      <td>(Please) Sit</td><td>kuutkOLi <b>(ಕೂತ್ಕೋಳಿ)</b></td><td>ukkaango <b>(ಉಕ್ಕಾಂಗೊ)</b></td></tr>
+  <tr><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">With anger (ಕೋಪದಿಂದ)</td>
+      <td>Sit (I say)</td><td>kuutkOLO <b>(ಕೂತ್ಕೋಳೋ)</b></td><td>ukkaaDO <b>(ಉಕ್ಕಾಡೋ)</b></td></tr>
+
+  <tr><td style="border-right-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style="border-right-style:none; border-left-style:none;"></td><td style=border-left-style:none;"></td></tr>
+  <tr><td class="Variations_Table_2_Sub_Heading_Text" COLSPAN="5">Table 2 (ಟೇಬಲ್ ೨)</td>
+
+  <tr><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Affection (ಪ್ರೀತಿ)</td>
+      <td>Don't do (dear)</td><td>maaDabEDaamma <b>(ಮಾಡಬೇಡಾಮ್ಮ)</b></td><td>paNvaaNaamma <b>(ಪಣ್ವಾಣಾಮ್ಮ)</b></td></tr>
+  <tr><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Disrespect (ಔಮರ್ಯಾದೆ)</td>
+      <td>Don't do (condescendingly)</td><td>maaDabEDavELe <b>(ಮಾಡಬೇಡವೇಲೆ)</b></td><td>paNvaaNaakDeDe <b>(ಪಣ್ವಾಣಾಕ್ಡೆಡೆ)</b></td></tr>
+  <tr><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Liberty (ಸಲಿಗೆ)</td>
+      <td>Don't do (lady)</td><td>maaDabEDave <b>(ಮಾಡಬೇಡವೆ)</b></td><td>paNvaaNaakDe <b>(ಪಣ್ವಾಣಾಕ್ಡೆ)</b></td></tr>
+  <tr><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">No feeling (ಭಾವನೆ ರಹಿತ)</td>
+      <td>Don't do</td><td>maaDabEDa <b>(ಮಾಡಬೇಡ)</b></td><td>paNvaaNa <b>(ಪಣ್ವಾಣ)</b></td></tr>
+  <tr><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">With respect (ಮರ್ಯಾದೆ ಸಹಿತ)</td>
+      <td>(Please) Don't do</td><td>maaDabEDi <b>(ಮಾಡಬೇಡಿ)</b></td><td>paNvaaNingo <b>(ಪಣ್ವಾಣಿಂಗೊ)</b></td></tr>
+  <tr><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">With anger (ಕೋಪದಿಂದ)</td>
+      <td>Don't do (I say)</td><td>maaDabEDavE <b>(ಮಾಡಬೇಡವೇ)</b></td><td>paNvaaNaakDE <b>(ಪಣ್ವಾಣಾಕ್ಡೇ)</b></td></tr>
+
+  </table>
+</div>
+
+<div id="Variation_5" class="VariationTabContent">
+  <table class="Variations_Table" id="Variations_Table_5">
+
+  <tr><th onclick="sortTable('Variations_Table_5',0)">English</th>
+      <th onclick="sortTable('Variations_Table_5',1)">Kannada (ಕನ್ನಡ)</th>
+      <th onclick="sortTable('Variations_Table_5',2)">Sanketi (ಸಂಕೇತಿ)</th></tr>
+
+  <tr><td>Today itself</td><td>ivatte <b>(ಇವತ್ತೆ)</b></td><td>inDe <b>(ಇಂಡೆ)</b></td></tr>
+  <tr><td>Today itself</td><td>ivattEne <b>(ಇವತ್ತೇನೆ)</b></td><td>inDEye <b>(ಇಂಡೇಯೆ)</b></td></tr>
+  <tr><td>Today</td><td>ivattu <b>(ಇವತ್ತು)</b></td><td>inDi <b>(ಇಂಡಿ)</b></td></tr>
+  <tr><td>Today itself?</td><td>ivattEno? <b>(ಇವತ್ತೇನೊ)</b></td><td>inDEyo? <b>(ಇಂಡೇಯೊ?)</b></td></tr>
+  <tr><td>Not Today?</td><td>ivattalvo? <b>(ಇವತ್ತಲ್ವೊ)</b></td><td>inDanDo? <b>(ಇಂಡಂಡೊ?)</b></td></tr>
+  <tr><td>Not Today</td><td>ivattalla <b>(ಇವತ್ತಲ್ಲ)</b></td><td>inDanDi <b>(ಇಂಡಂಡಿ)</b></td></tr>
+  <tr><td>Within Today</td><td>ivattoLage <b>(ಇವತ್ತೊಳಗೆ)</b></td><td>inDuLLe <b>(ಇಂಡುಳ್ಳೆ)</b></td></tr>
+  <tr><td>Not Today</td><td>ivattilla <b>(ಇವತ್ತಿಲ್ಲ)</b></td><td>inDille <b>(ಇಂಡಿಲ್ಲೆ)</b></td></tr>
+  <tr><td>Like Today</td><td>ivattirOhaage <b>(ಇವತ್ತಿರೋಹಾಗೆ)</b></td><td>inDikrapDi <b>(ಇಂಡಿಕ್ರಪ್ಡಿ)</b></td></tr>
+  <tr><td>From Today</td><td>ivattinda <b>(ಇವತ್ತಿಂದ)</b></td><td>inDinno <b>(ಇಂಡಿನ್ನೊ)</b></td></tr>
+  <tr><td>From Today itself</td><td>ivattindaane <b>(ಇವತ್ತಿಂದಾನೆ)</b></td><td>inDinnome <b>(ಇಂಡಿನ್ನೊಮೆ)</b></td></tr>
+  <tr><td>From Today itself?</td><td>ivattindaanEna? <b>(ಇವತ್ತಿಂದಾನೇನ?)</b></td><td>inDinnomEya? <b>(ಇಂಡಿನ್ನೊಮೇಯ?)</b></td></tr>
+  <tr><td>Indeed from Today itself</td><td>ivattindaanEne <b>(ಇವತ್ತಿಂದಾನೇನೆ)</b></td><td>inDinnomEye <b>(ಇಂಡಿನ್ನೊಮೇಯೆ)</b></td></tr>
+  <tr><td>From Today itself?</td><td>ivattindaanEno? <b>(ಇವತ್ತಿಂದಾನೇನೊ?)</b></td><td>inDinnomEyo? <b>(ಇಂಡಿನ್ನೊಮೇಯೊ?)</b></td></tr>
+  <tr><td>Like it happened Today</td><td>ivattaadahaage <b>(ಇವತ್ತಾದಹಾಗೆ)</b></td><td>inDaanapDe <b>(ಇಂಡಾನಪ್ಡೆ)</b></td></tr>
+  <tr><td>Like it just happened Today</td><td>ivattaadahaagEne <b>(ಇವತ್ತಾದಹಾಗೇನೆ)</b></td><td>inDaanapDEye <b>(ಇಂಡಾನಪ್ಡೇಯೆ)</b></td></tr>
+  <tr><td>Like it happened Today</td><td>ivattaadahaage <b>(ಇವತ್ತಾದಹಾಗೆ)</b></td><td>inDaanapDi <b>(ಇಂಡಾನಪ್ಡಿ)</b></td></tr>
+  <tr><td>Today's?</td><td>ivattinda? <b>(ಇವತ್ತಿಂದ)</b></td><td>inDEtEda? <b>(ಇಂಡೇತೇದ?)</b></td></tr>
+  <tr><td>Not Today's?</td><td>ivattindalwa? <b>(ಇವತ್ತಿಂದಲ್ವ?)</b></td><td>inDEtEdanDa? <b>(ಇಂಡೇತೇದಂಡ?)</b></td></tr>
+  <tr><td>Not Today's</td><td>ivattindalla <b>(ಇವತ್ತಿಂದಲ್ಲ)</b></td><td>inDEtEdanDi <b>(ಇಂಡೇತೇದಂಡಿ)</b></td></tr>
+  <tr><td>Not Today's?</td><td>ivattindalwo? <b>(ಇವತ್ತಿಂದಲ್ವೊ)</b></td><td>inDEtEdanDo? <b>(ಇಂಡೇತೇದಂಡೊ?)</b></td></tr>
+  <tr><td>Today itself?</td><td>ivattEna? <b>(ಇವತ್ತೇನ?)</b></td><td>inDEya? <b>(ಇಂಡೇಯ?)</b></td></tr>
+  <tr><td>For Today?</td><td>ivattiga? <b>(ಇವತ್ತಿಗ?)</b></td><td>inDEka? <b>(ಇಂಡೇಕ?)</b></td></tr>
+  <tr><td>For Today</td><td>ivattige <b>(ಇವತ್ತಿಗೆ)</b></td><td>inDEki <b>(ಇಂಡೇಕಿ)</b></td></tr>
+  <tr><td>Not Today?</td><td>ivattalwa? <b>(ಇವತ್ತಲ್ವ?)</b></td><td>inDanDa? <b>(ಇಂಡಂಡ?)</b></td></tr>
+  <tr><td>Not for Today?</td><td>ivattigalwa? <b>(ಇವತ್ತಿಗಲ್ವ?)</b></td><td>inDEkanDa? <b>(ಇಂಡೇಕಂಡ?)</b></td></tr>
+  <tr><td>Not for Today</td><td>ivattigalla <b>(ಇವತ್ತಿಗಲ್ಲ)</b></td><td>inDEkanDi <b>(ಇಂಡೇಕಂಡಿ)</b></td></tr>
+  <tr><td>Not for Today</td><td>ivattigalwo? <b>(ಇವತ್ತಿಗಲ್ವೊ)</b></td><td>inDEkanDo? <b>(ಇಂಡೇಕಂಡೊ?)</b></td></tr>
+  <tr><td>For Today itself</td><td>ivattigE <b>(ಇವತ್ತಿಗೇ)</b></td><td>inDEke <b>(ಇಂಡೇಕೆ)</b></td></tr>
+  <tr><td>Indeed for Today itself</td><td>ivattigEne <b>(ಇವತ್ತಿಗೇನೆ)</b></td><td>inDEkEye <b>(ಇಂಡೇಕೇಯೆ)</b></td></tr>
+  <tr><td>Not for Today</td><td>ivattigilla <b>(ಇವತ್ತಿಗಿಲ್ಲ)</b></td><td>inDEkille <b>(ಇಂಡೇಕಿಲ್ಲೆ)</b></td></tr>
+  <tr><td>For Today itself?</td><td>ivattigEna? <b>(ಇವತ್ತಿಗೇನ?)</b></td><td>inDEkEya? <b>(ಇಂಡೇಕೇಯ?)</b></td></tr>
+  <tr><td>For Today itself?</td><td>ivattigEno? <b>(ಇವತ್ತಿಗೇನೊ?)</b></td><td>inDEkEyo? <b>(ಇಂಡೇಕೇಯೊ?)</b></td></tr>
+  <tr><td>For Today itself isn't it?</td><td>ivattigtaane <b>(ಇವತ್ತಿಗ್ತಾನೆ)</b></td><td>inDEktaane? <b>(ಇಂಡೇಕ್ತಾನೆ?)</b></td></tr>
+  <tr><td>Today's</td><td>ivattina <b>(ಇವತ್ತಿನ)</b></td><td>inDEte? <b>(ಇಂಡೇತೆ)</b></td></tr>
+  <tr><td>Today's itself</td><td>ivattinde <b>(ಇವತ್ತಿಂದೆ)</b></td><td>inDEtEde <b>(ಇಂಡೇತೇದೆ)</b></td></tr>
+  <tr><td>Today's</td><td>ivattindu <b>(ಇವತ್ತಿಂದು)</b></td><td>inDEtEdi <b>(ಇಂಡೇತೇದಿ)</b></td></tr>
+  <tr><td>Today's?</td><td>ivattindo? <b>(ಇವತ್ತಿಂದೊ?)</b></td><td>inDEtEdo? <b>(ಇಂಡೇತೇದೊ?)</b></td></tr>
+  <tr><td>From Today?</td><td>ivattindaana? <b>(ಇವತ್ತಿಂದಾನ?)</b></td><td>inDinnoma? <b>(ಇಂಡಿನ್ನೊಮ?)</b></td></tr>
+  <tr><td>Not there Today?</td><td>ivattilvo? <b>(ಇವತ್ತಿಲ್ವೊ?)</b></td><td>inDilyo? <b>(ಇಂಡಿಲ್ಯೊ?)</b></td></tr>
+  <tr><td>Not there Today</td><td>ivattilvalla <b>(ಇವತ್ತಿಲ್ವಲ್ಲ)</b></td><td>inDilye <b>(ಇಂಡಿಲ್ಯೆ)</b></td></tr>
+  <tr><td>Not there Today?</td><td>ivattilva? <b>(ಇವತ್ತಿಲ್ವ?)</b></td><td>inDilya? <b>(ಇಂಡಿಲ್ಯ?)</b></td></tr>
+  <tr><td>Today also</td><td>ivattuuve <b>(ಇವತ್ತೂವೆ)</b></td><td>inDuuve <b>(ಇಂಡೂವೆ)</b></td></tr>
+  <tr><td>Let Today's?</td><td>ivattaagali <b>(ಇವತ್ತಾಗಲಿ)</b></td><td>inDaagDi <b>(ಇಂಡಾಗ್ಡಿ)</b></td></tr>
+  <tr><td>Not Today get over</td><td>ivattaagOdarindaane <b>(ಇವತ್ತಾಗೋದರಿಂದಾನೆ)</b></td><td>inDaagartinnome <b>(ಇಂಡಾಗರ್ತಿನ್ನೊಮೆ)</b></td></tr>
+  <tr><td>Let be there Today</td><td>ivattirali <b>(ಇವತ್ತಿರಲಿ)</b></td><td>inDikkagDi <b>(ಇಂಡಿಕ್ಕಗ್ಡಿ)</b></td></tr>
+  <tr><td>Dont stay Today</td><td>ivattirabEDa <b>(ಇವತ್ತಿರಬೇಡ)</b></td><td>inDikvaaNa <b>(ಇಂಡಿಕ್ವಾಣ)</b></td></tr>
+  <tr><td>From Today?</td><td>ivattindaano? <b>(ಇವತ್ತಿಂದಾನೊ?)</b></td><td>inDinnomo? <b>(ಇಂಡಿನ್ನೊಮೊ?)</b></td></tr>
+  <tr><td>Can't stay Today?</td><td>ivattirakkaagalwa? <b>(ಇವತ್ತಿರಕ್ಕಾಗಲ್ವ?)</b></td><td>inDikkaakaarlya? <b>(ಇಂಡಿಕ್ಕಾಕಾರ್ಲ್ಯ?)</b></td></tr>
+  <tr><td>Can't stay Today</td><td>ivattirakkaagalla <b>(ಇವತ್ತಿರಕ್ಕಾಗಲ್ಲ)</b></td><td>inDikkaakaarle <b>(ಇಂಡಿಕ್ಕಾಕಾರ್ಲೆ)</b></td></tr>
+  <tr><td>Could not stay Today</td><td>ivattirakaagalilla <b>(ಇವತ್ತಿರಕ್ಕಾಗಲಿಲ್ಲ)</b></td><td>inDikkaakaachille <b>(ಇಂಡಿಕ್ಕಾಕಾಚಿಲ್ಲೆ)</b></td></tr>
+  <tr><td>Can't stay Today?</td><td>ivattirOgOjilla <b>(ಇವತ್ತಿರೋಗೋಜಿಲ್ಲ)</b></td><td>inDikkaakaagarle <b>(ಇಂಡಿಕ್ಕಾಕಾಗರ್ಲೆ)</b></td></tr>
+  <tr><td>Need not stay Today?</td><td>ivattigalwa? <b>(ಇವತ್ತಿಗಲ್ವ?)</b></td><td>inDikkargOjille <b>(ಇಂಡಿಕ್ಕರ್ಗೋಜಿಲ್ಲೆ)</b></td></tr>
+  <tr><td>From Today?</td><td>ivattindaanaa? <b>(ಇವತ್ತಿಂದಾನಾ?)</b></td><td>inDinnovaa? <b>(ಇಂಡಿನ್ನೊವಾ?)</b></td></tr>
+  <tr><td>There Today</td><td>ivattirOdu <b>(ಇವತ್ತಿರೋದು)</b></td><td>inDikkardi <b>(ಇಂಡಿಕ್ಕರ್ದಿ)</b></td></tr>
+  <tr><td>Will not be there Today</td><td>ivattiralla <b>(ಇವತ್ತಿರಲ್ಲ)</b></td><td>inDikkarle <b>(ಇಂಡಿಕ್ಕರ್ಲೆ)</b></td></tr>
+  <tr><td>Will not be there Today</td><td>ivattiralla <b>(ಇವತ್ತಿರಲ್ಲ)</b></td><td>inDikkarla <b>(ಇಂಡಿಕ್ಕರ್ಲ)</b></td></tr>
+  <tr><td>Will not be there Today?</td><td>ivattiralwa? <b>(ಇವತ್ತಿರಲ್ವ?)</b></td><td>inDikkarlya? <b>(ಇಂಡಿಕ್ಕರ್ಲ್ಯ?)</b></td></tr>
+  <tr><td>Will not be there Today is it?</td><td>ivattiralwo? <b>(ಇವತ್ತಿರಲ್ವೊ?)</b></td><td>inDikkarlyo? <b>(ಇಂಡಿಕ್ಕರ್ಲ್ಯೊ?)</b></td></tr>
+  <tr><td>That is there Today</td><td>ivattiro <b>(ಇವತ್ತಿರೊ)</b></td><td>inDikkara <b>(ಇಂಡಿಕ್ಕರ)</b></td></tr>
+  <tr><td>As much as is there Today</td><td>ivattiro aShTu <b>(ಇವತ್ತಿರೊ ಅಷ್ಟು)</b></td><td>inDikratne <b>(ಇಂಡಿಕ್ರತ್ನೆ)</b></td></tr>
+  <tr><td>Like Today</td><td>ivattinahaage <b>(ಇವತ್ತಿನಹಾಗೆ)</b></td><td>inDEpOle <b>(ಇಂಡೇಪೋಲೆ)</b></td></tr>
+  <tr><td>Like Today at least</td><td>ivattinahaagantu <b>(ಇವತ್ತಿನಹಾಗಂತು)</b></td><td>inDEpOlantu <b>(ಇಂಡೇಪೋಲಂತು)</b></td></tr>
+  <tr><td>As much as Today</td><td>ivattinaShTu <b>(ಇವತ್ತಿನಷ್ಟು)</b></td><td>inDEpOlatne <b>(ಇಂಡೇಪೋಲತ್ನೆ)</b></td></tr>
+  <tr><td>Like it is Today</td><td>ivattiddahaage <b>(ಇವತ್ತಿದ್ದಹಾಗೆ)</b></td><td>inDindapDi <b>(ಇಂಡಿಂದಪ್ಡಿ)</b></td></tr>
+  <tr><td>Like this Today</td><td>ivattu heege <b>(ಇವತ್ತು ಹೀಗೆ)</b></td><td>inDipDi <b>(ಇಂಡಿಪ್ಡಿ)</b></td></tr>
+  <tr><td>That too Today</td><td>ivattantu <b>(ಇವತ್ತಂತು)</b></td><td>inDantu <b>(ಇಂಡಂತು)</b></td></tr>
+  <tr><td>Today?</td><td>ivattaa? <b>(ಇವತ್ತಾ?)</b></td><td>inDaa? <b>(ಇಂಡಾ?)</b></td></tr>
+  <tr><td>Why Today?</td><td>ivattEke? <b>(ಇವತ್ತೇಕೆ?)</b></td><td>inDOki? <b>(ಇಂಡೋಕಿ?)</b></td></tr>
+  <tr><td>For Today is it?</td><td>ivattigo? <b>(ಇವತ್ತಿಗೊ?)</b></td><td>inDEko? <b>(ಇಂಡೇಕೊ?)</b></td></tr>
+  <tr><td>After Today</td><td>ivattaadamEle <b>(ಇವತ್ತಾದಮೇಲೆ)</b></td><td>inDaanmEle <b>(ಇಂಡಾನ್ಮೇಲೆ)</b></td></tr>
+  <tr><td>Today over</td><td>ivattaagihOytu <b>(ಇವತ್ತಾಗಿಹೋಯ್ತು)</b></td><td>inDaapOchu <b>(ಇಂಡಾಪೋಚು)</b></td></tr>
+  <tr><td>Not possible Today</td><td>ivattaagalla <b>(ಇವತ್ತಾಗಲ್ಲ?)</b></td><td>inDaarle <b>(ಇಂಡಾರ್ಲೆ)</b></td></tr>
+  <tr><td>Today also?</td><td>ivattuu naa? <b>(ಇವತ್ತೂ ನಾ?)</b></td><td>inDuuvaa? <b>(ಇಂಡೂವಾ?)</b></td></tr>
+  <tr><td>Today too?</td><td>ivattuu? <b>(ಇವತ್ತೂ?)</b></td><td>inDuu? <b>(ಇಂಡೂ?)</b></td></tr>
+  <tr><td>Today also</td><td>ivattuu <b>(ಇವತ್ತೂ)</b></td><td>inDu <b>(ಇಂಡು)</b></td></tr>
+  <tr><td>Today is it?</td><td>ivatto? <b>(ಇವತ್ತೊ?)</b></td><td>inDo? <b>(ಇಂಡೊ?)</b></td></tr>
+  <tr><td>Since it is Today</td><td>ivattaagiddarinda <b>(ಇವತ್ತಾಗಿದ್ದರಿಂದ)</b></td><td>inDaayikkartinno <b>(ಇಂಡಾಯಿಕ್ಕರ್ತಿನ್ನೊ)</b></td></tr>
+  <tr><td>Since it is Today only</td><td>ivattaagiddarindaane <b>(ಇವತ್ತಾಗಿದ್ದರಿಂದಾನೆ)</b></td><td>inDaayikkartinnome <b>(ಇಂಡಾಯಿಕ್ಕರ್ತಿನ್ನೊಮೆ)</b></td></tr>
+  <tr><td>Is it because it is Today?</td><td>ivattaagirOdrinda naa? <b>(ಇವತ್ತಾಗಿರೋದ್ರಿಂದ ನಾ?)</b></td><td>inDaayikkartinnoma? <b>(ಇಂಡಾಯಿಕ್ಕರ್ತಿನ್ನೊಮ?)</b></td></tr>
+  <tr><td>Till Today</td><td>ivattina varege <b>(ಇವತ್ತಿನ ವರೆಗೆ)</b></td><td>inDEvariku <b>(ಇಂಡೇವರಿಕು)</b></td></tr>
+  <tr><td>As much as Today</td><td>ivattaShTu <b>(ಇವತ್ತಷ್ಟು)</b></td><td>inDatne <b>(ಇಂಡತ್ನೆ)</b></td></tr>
+  <tr><td>How much Today?</td><td>ivatteShTu? <b>(ಇವತ್ತೆಷ್ಟು)</b></td><td>inDatne? <b>(ಇಂಡತ್ನೆ?)</b></td></tr>
+  <tr><td>What is it Today?</td><td>ivattEno? <b>(ಇವತ್ತೇನೊ?)</b></td><td>inDOdo? <b>(ಇಂಡೋದೊ?)</b></td></tr>
+  <tr><td>Today's itself</td><td>ivattindEye <b>(ಇವತ್ತಿಂದೇಯೆ)</b></td><td>inDEtEdEye <b>(ಇಂಡೇತೇದೇಯೆ)</b></td></tr>
+  <tr><td>Is it Today's?</td><td>ivattindEna? <b>(ಇವತ್ತಿಂದೇನ?)</b></td><td>inDEtEdEya? <b>(ಇಂಡೇತೇದೇಯ?)</b></td></tr>
+  </table>
+</div>
+
+<div id="Variation_6" class="VariationTabContent">
+  <table class="Variations_Table" id="Variations_Table_6">
+  <tr><th onclick="sortTable('Variations_Table_6',0,2)">English</th>
+      <th onclick="sortTable('Variations_Table_6',1,2)">Kannada (ಕನ್ನಡ)</th>
+      <th onclick="sortTable('Variations_Table_6',2,2)" style="border-right-style:none; text-align:right;">Sanketi </th><th onclick="sortTable('Variations_Table_6',3,2)" style="border-left-style:none; text-align:left;">(ಸಂಕೇತಿ)</th></tr>
+
+  <tr><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Word</td><td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Word (ಪದ)</td>
+      <td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Word (ಪದ)</td>
+      <td class="Variations_Table_1_Sub_Header" style="color: #FF33CC;font-weight: bold;">Opposite (ವಿರುದ್ಧ ಪದ)</td></tr>
+
+  <tr><td>After</td><td>aadamEle <b>(ಆದಮೇಲೆ)</b></td><td>aanmEle <b>(ಆನ್ಮೇಲೆ)</b></td><td>mudlu <b>(ಮುದ್ಲು)</b></td></tr>
+  <tr><td>Blessing</td><td>aasheervaada <b>(ಆಶೀರ್ವಾದ)</b></td><td>aasheervaado <b>(ಆಶೀರ್ವಾದೊ)</b></td><td>shaapo <b>(ಶಾಪೊ)</b></td></tr>
+  <tr><td>Poor</td><td>baDava <b>(ಬಡವ)</b></td><td>baDavo <b>(ಬಡವೊ)</b></td><td>shreemanto <b>(ಶ್ರೀಮಂತೊ)</b></td></tr>
+  <tr><td>Close</td><td>muchchu <b>(ಮುಚ್ಚು)</b></td><td>chaati <b>(ಚಾತಿ)</b></td><td>tarvi <b>(ತರ್ವಿ)</b></td></tr>
+  <tr><td>Laugh</td><td>nagu <b>(ನಗು)</b></td><td>chiri <b>(ಚಿರಿ)</b></td><td>aLi <b>(ಅಳಿ)</b></td></tr>
+  <tr><td>Fat</td><td>dappa <b>(ದಪ್ಪ)</b></td><td>dappo <b>(ದಪ್ಪೊ)</b></td><td>saNNo <b>(ಸಣ್ಣೊ)</b></td></tr>
+  <tr><td>Grief</td><td>duhkha <b>(ದುಃಖ)</b></td><td>duhkho <b>(ದುಃಖೊ)</b></td><td>santOsho <b>(ಸಂತೋಷೊ)</b></td></tr>
+  <tr><td>Awake</td><td>echchara <b>(ಎಚ್ಚರ)</b></td><td>echcharo <b>(ಎಚ್ಚರೊ)</b></td><td>orko <b>(ಒರ್ಕೊ)</b></td></tr>
+  <tr><td>Hard</td><td>gaTTi <b>(ಗಟ್ಟಿ)</b></td><td>gaTTi <b>(ಗಟ್ಟಿ)</b></td><td>mRudu <b>(ಮೃದು)</b></td></tr>
+  <tr><td>Understood</td><td>gottaaytu <b>(ಗೊತ್ತಾಯ್ತು)</b></td><td>gottaachi <b>(ಗೊತ್ತಾಚಿ)</b></td><td>gottaachille <b>(ಗೊತ್ತಾಚಿಲ್ಲೆ)</b></td></tr>
+  <tr><td>Close</td><td>hattira <b>(ಹತ್ತಿರ)</b></td><td>hattiro <b>(ಹತ್ತಿರೊ)</b></td><td>duuro <b>(ದೂರೊ)</b></td></tr>
+  <tr><td>Coward</td><td>hedarpukla <b>(ಹೆದರ್ಪುಕ್ಲ)</b></td><td>hedarpuklo <b>(ಹೆದರ್ಪುಕ್ಲೊ)</b></td><td>dhairyavanto <b>(ಧೈರ್ಯವಂತೊ)</b></td></tr>
+  <tr><td>Praise</td><td>hogaLu <b>(ಹೊಗಳು)</b></td><td>hogaLu <b>(ಹೊಗಳು)</b></td><td>vaiyyi	 <b>(ವೈಯ್ಯಿ)</b></td></tr>
+  <tr><td>Boy</td><td>huDuga <b>(ಹುಡುಗ)</b></td><td>huDugo <b>(ಹುಡುಗೊ)</b></td><td>huDugi <b>(ಹುಡುಗಿ)</b></td></tr>
+  <tr><td>Darkness</td><td>kattalu <b>(ಕತ್ತಲು)</b></td><td>iraTi <b>(ಇರಟಿ)</b></td><td>vaLki <b>(ವಳ್ಕಿ)</b></td></tr>
+  <tr><td>Clever man</td><td>jaaNa <b>(ಜಾಣ)</b></td><td>jaaNo <b>(ಜಾಣೊ)</b></td><td>peddo <b>(ಪೆದ್ದೊ)</b></td></tr>
+  <tr><td>More</td><td>jaasti <b>(ಜಾಸ್ತಿ)</b></td><td>jaasti <b>(ಜಾಸ್ತಿ)</b></td><td>kaDime <b>(ಕಡಿಮೆ)</b></td></tr>
+  <tr><td>Bitter</td><td>kahi <b>(ಕಹಿ)</b></td><td>kaḥi <b>(ಕಹಿ಼)</b></td><td>ṣhee <b>(ಶೀ಼)</b></td></tr>
+  <tr><td>Black</td><td>kappu <b>(ಕಪ್ಪು)</b></td><td>karki <b>(ಕರ್ಕಿ)</b></td><td>haLki <b>(ಹಳ್ಕಿ)</b></td></tr>
+  <tr><td>Difficult</td><td>kaShTa <b>(ಕಷ್ಟ)</b></td><td>kaShTo <b>(ಕಷ್ಟೊ)</b></td><td>sulabho <b>(ಸುಲಭೊ)</b></td></tr>
+  <tr><td>Give</td><td>koDu <b>(ಕೊಡು)</b></td><td>kuDu <b>(ಕುಡು)</b></td><td>ankyo <b>(ಅಂಕ್ಯೊ)</b></td></tr>
+  <tr><td>Bottom</td><td>keLage <b>(ಕೆಳಗೆ)</b></td><td>kuuLe <b>(ಕೂಳೆ)</b></td><td>mEle <b>(ಮೇಲೆ)</b></td></tr>
+  <tr><td>Beautiful</td><td>lakShaNa <b>(ಲಕ್ಷಣ)</b></td><td>lakShaNo <b>(ಲಕ್ಷಣೊ)</b></td><td>avalakShaNo <b>(ಅವಲಕ್ಷಣೊ)</b></td></tr>
+  <tr><td>Sink</td><td>muLugu <b>(ಮುಳುಗು)</b></td><td>muLugu <b>(ಮುಳುಗು)</b></td><td>tEli <b>(ತೇಲಿ)</b></td></tr>
+  <tr><td>Good</td><td>oLLEdu <b>(ಒಳ್ಳೇದು)</b></td><td>naldi <b>(ನಲ್ದಿ)</b></td><td>kaTdi <b>(ಕಟ್ದಿ)</b></td></tr>
+  <tr><td>Nice</td><td>chennaagide <b>(ಚೆನ್ನಾಗಿದೆ)</b></td><td>nanDaaraandi <b>(ನಂಡಾರಾಂದಿ)</b></td><td>nanDaayille <b>(ನಂಡಾಯಿಲ್ಲೆ)</b></td></tr>
+  <tr><td>Hell</td><td>naraka <b>(ನರಕ)</b></td><td>narako <b>(ನರಕೊ)</b></td><td>svargo <b>(ಸ್ವರ್ಗೊ)</b></td></tr>
+  <tr><td>Loyalty</td><td>niShThe <b>(ನಿಷ್ಠೆ)</b></td><td>niShThe <b>(ನಿಷ್ಠೆ)</b></td><td>mOso <b>(ಮೋಸೊ)</b></td></tr>
+  <tr><td>Justice</td><td>nyaaya <b>(ನ್ಯಾಯ)</b></td><td>nyaayo <b>(ನ್ಯಾಯೊ)</b></td><td>anyaayo <b>(ಅನ್ಯಾಯೊ)</b></td></tr>
+  <tr><td>Right</td><td>balagaDe <b>(ಬಲಗಡೆ)</b></td><td>olakaDe <b>(ಒಲಕಡೆ)</b></td><td>aDakaDe <b>(ಅಡಕಡೆ)</b></td></tr>
+  <tr><td>Day</td><td>hagalu <b>(ಹಗಲು)</b></td><td>pagali <b>(ಪಗಲಿ)</b></td><td>raatri <b>(ರಾತ್ರಿ)</b></td></tr>
+  <tr><td>Old</td><td>haLEdu <b>(ಹಳೇದು)</b></td><td>paLajji <b>(ಪಳಜ್ಜಿ)</b></td><td>pudujju <b>(ಪುದುಜ್ಜು)</b></td></tr>
+  <tr><td>For</td><td>para <b>(ಪರ)</b></td><td>paro <b>(ಪರೊ)</b></td><td>virOdho <b>(ವಿರೋಧೊ)</b></td></tr>
+  <tr><td>Big</td><td>doDDa <b>(ದೊಡ್ಡ)</b></td><td>peri <b>(ಪೆರಿ)</b></td><td>saNNi <b>(ಸಣ್ಣಿ)</b></td></tr>
+  <tr><td>Birth</td><td>huTTOdu <b>(ಹುಟ್ಟೋದು)</b></td><td>porvardi <b>(ಪೊರ್ವರ್ದಿ)</b></td><td>chaavardi <b>(ಚಾವರ್ದಿ)</b></td></tr>
+  <tr><td>Question</td><td>prashNe <b>(ಪ್ರಶ್ಣೆ)</b></td><td>prashNe <b>(ಪ್ರಶ್ಣೆ)</b></td><td>uttaro <b>(ಉತ್ತರೊ)</b></td></tr>
+  <tr><td>Full</td><td>puurti <b>(ಪೂರ್ತಿ)</b></td><td>puurti <b>(ಪೂರ್ತಿ)</b></td><td>khaali <b>(ಖಾಲಿ)</b></td></tr>
+  <tr><td>East</td><td>puurva <b>(ಪೂರ್ವ)</b></td><td>puurvo <b>(ಪೂರ್ವೊ)</b></td><td>pashchimo <b>(ಪಶ್ಚಿಮೊ)</b></td></tr>
+  <tr><td>Present</td><td>ide <b>(ಇದೆ)</b></td><td>raandi <b>(ರಾಂದಿ)</b></td><td>ille <b>(ಇಲ್ಲೆ)</b></td></tr>
+  <tr><td>Disease</td><td>rOga <b>(ರೋಗ)</b></td><td>rOgo <b>(ರೋಗೊ)</b></td><td>aarOgyo <b>(ಆರೋಗ್ಯೊ)</b></td></tr>
+  <tr><td>Correct</td><td>sari <b>(ಸರಿ)</b></td><td>sari <b>(ಸರಿ)</b></td><td>tappi <b>(ತಪ್ಪಿ)</b></td></tr>
+  <tr><td>Truth</td><td>satya <b>(ಸತ್ಯ)</b></td><td>satyo <b>(ಸತ್ಯೊ)</b></td><td>pOyyi <b>(ಪೊಯ್ಯಿ)</b></td></tr>
+  <tr><td>Got</td><td>sikkitu <b>(ಸಿಕ್ಕಿತು)</b></td><td>shikkatti <b>(ಶಿಕ್ಕತ್ತಿ)</b></td><td>shikkattille <b>(ಶಿಕ್ಕತ್ತಿಲ್ಲೆ)</b></td></tr>
+  <tr><td>Beginning</td><td>shuru <b>(ಶುರು)</b></td><td>shuru <b>(ಶುರು)</b></td><td>kone <b>(ಕೊನೆ)</b></td></tr>
+  <tr><td>Friend</td><td>snEhita <b>(ಸ್ನೇಹಿತ)</b></td><td>snEhito <b>(ಸ್ನೇಹಿತೊ)</b></td><td>shatru <b>(ಶತ್ರು)</b></td></tr>
+  <tr><td>Failure</td><td>sOlu <b>(ಸೋಲು)</b></td><td>sOlu <b>(ಸೋಲು)</b></td><td>gelvi <b>(ಗೆಲ್ವಿ)</b></td></tr>
+  <tr><td>Patience</td><td>taaLme <b>(ತಾಳ್ಮೆ)</b></td><td>taaLme <b>(ತಾಳ್ಮೆ)</b></td><td>kOpo <b>(ಕೋಪೊ)</b></td></tr>
+  <tr><td>In</td><td>oLage <b>(ಒಳಗೆ)</b></td><td>uLLe <b>(ಉಳ್ಳೆ)</b></td><td>porambe <b>(ಪೊರಂಬೆ)</b></td></tr>
+  <tr><td>Tall</td><td>udda <b>(ಉದ್ದ)</b></td><td>ushro <b>(ಉಶ್ರೊ)</b></td><td>giDDo <b>(ಗಿಡ್ಡೊ)</b></td></tr>
+  <tr><td>North</td><td>uttara <b>(ಉತ್ತರ)</b></td><td>uttaro <b>(ಉತ್ತರೊ)</b></td><td>dakShiNo <b>(ದಕ್ಷಿಣೊ)</b></td></tr>
+  <tr><td>Coming?</td><td>baruttidya? <b>(ಬರುತ್ತಿದ್ಯ?)</b></td><td>vaaraanDya? <b>(ವಾರಾಂಡ್ಯ?)</b></td><td>varlya? <b>(ವರ್ಲ್ಯ?)</b></td></tr>
+  <tr><td>Came</td><td>bantu/banda/Lu <b>(ಬಂತು/ಬಂದ/ಳು)</b></td><td>vandi <b>(ವಂದಿ)</b></td><td>pOchu <b>(ಪೋಚು)</b></td></tr>
+  <tr><td>Hot</td><td>bisi <b>(ಬಿಸಿ)</b></td><td>vari <b>(ವರಿ)</b></td><td>kuLiri <b>(ಕುಳಿರಿ)</b></td></tr>
+  <tr><td>Want</td><td>bEku <b>(ಬೇಕು)</b></td><td>vONu <b>(ವೋಣು)</b></td><td>vaaNa <b>(ವಾಣ)</b></td></tr>
+  <tr><td>Youth</td><td>youvvana <b>(ಯೌವ್ವನ)</b></td><td>youvvano <b>(ಯೌವ್ವನೊ)</b></td><td>muppu <b>(ಮುಪ್ಪು)</b></td></tr>
+
+  </table>
+</div>
+
+</div>
+
+<div id="MainDownload">
+
+<div id="MainDownloadBooks"  style="display:none;">
+
+<p class = "notmobile" style="text-align:center;">Books(Scanned/soft copies) related to Sanketi dictionary can be downloaded from here. <br>Interested authors who wish to make their books available may please contact the group. <br><br><b>(ಸಂಕೇತಿ ನಿಘಂಟುವಿಗೆ ಸಂಬಂಧ ಪಟ್ಟ ಪುಸ್ತಕಗಳನ್ನು (ಸ್ಕ್ಯಾನ್ ಅಥವ ಸಾಪ್ಟ್ ಕಾಪಿ) ಇಲ್ಲಿಂದ ಇಳಿಸಿಕೊಳ್ಳಬಹುದು. <br>ತಮ್ಮ ಪುಸ್ತಕಗಳನ್ನು ಇಲ್ಲಿ ಒದಗಿಸಲಿಚ್ಛಿಸುವ ಆಸಕ್ತ ಲೇಖಕರು ಈ ತಂಡವನ್ನು ಸಂಪರ್ಕಿಸುವಂತೆ ವಿನಂತಿ) </b></p>
+<p class = "mobile" style="text-align:left;">Books(Scanned/soft copies) related to Sanketi dictionary can be downloaded from here. Interested authors who wish to make their books available may please contact the group. <br><br><b>(ಸಂಕೇತಿ ನಿಘಂಟುವಿಗೆ ಸಂಬಂಧ ಪಟ್ಟ ಪುಸ್ತಕಗಳನ್ನು (ಸ್ಕ್ಯಾನ್ ಅಥವ ಸಾಪ್ಟ್ ಕಾಪಿ) ಇಲ್ಲಿಂದ ಇಳಿಸಿಕೊಳ್ಳಬಹುದು.  ತಮ್ಮ ಪುಸ್ತಕಗಳನ್ನು ಇಲ್ಲಿ ಒದಗಿಸಲಿಚ್ಛಿಸುವ ಆಸಕ್ತ ಲೇಖಕರು ಈ ತಂಡವನ್ನು ಸಂಪರ್ಕಿಸುವಂತೆ ವಿನಂತಿ) </b></p>
+
+</div>
+
+<div id="MainDownloadProject"  style="display:none;">
+<p style="text-align:center;">Download in progress, please wait...<br><br><b>(ಡೌನ್ಲೋಡ್ ಪ್ರಗತಿಯಲ್ಲಿ ಇದೆ. ದಯವಿಟ್ಟು ಕಾಯಿರಿ...)</b></p>
+</div>
+
+</div>
+
+<div id="popupWarningAlert" title="Warning (ಎಚ್ಚರಿಕೆ)" >
+  <p>Please note - If a previous download is still in progress, it will be suspended. To continue, click Yes. If not, click No.<br> <br> <b> (ದಯವಿಟ್ಟು ಗಮನಿಸಿ - ಹಿಂದಿನ ಡೌನ್‌ಲೋಡ್ ಇನ್ನೂ ಪ್ರಗತಿಯಲ್ಲಿದ್ದರೆ,  ಅದನ್ನು ಅಮಾನತುಗೊಳಿಸಲಾಗುವುದು. ಮುಂದುವರಿಸಲು ಹೌದು ಒತ್ತಿ. ಇಲ್ಲದಿದ್ದರೆ ಇಲ್ಲ ಒತ್ತಿ.) </b></p>
+  <div>
+    <input type="button" class='popupWarningAlertButtons' value="Yes (ಹೌದು)" onclick="handleDownloadOk();"/>
+    <input type="button" class='popupWarningAlertButtons' value="No (ಇಲ್ಲ)" onclick="restoreFromPopupAlert();"/>
+  </div>
+</div>
+
+<div class="progressContainer" id="progressContainer">
+  <div class="progressIndicator project" id="progressIndicator">0%</div>
+</div>
+
+</body>
+  <script src = "helper.js"> </script>
+</html> 
+
