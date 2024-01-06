@@ -14,17 +14,15 @@ define("DOWNLOADS_FOLDER", "./Downloads/");
 define("AUDIO_BS_WORD", "6");
 define("AUDIO_BS_EXAMPLE", "23");
 
-$servername = "localhost";
+$servername = "192.168.1.2";
 $username = "root";
 $password = "";
 $dbname = "sanketi dictionary";
-//$dbname = "sanketi dictionary - 3";
 
 $constants = 1;
 
 }
 
-// get the q parameter from URL. This is the name of the input table to be read
 $q = $_REQUEST["q"];    
 
 ?>
