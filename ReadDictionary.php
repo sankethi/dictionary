@@ -39,5 +39,5 @@ if(!empty($row))
                           $rows['Example_in_MS_english_font (ಉದಾಹರಣೆ_ಮಸಂ_ಆಂಗ್ಲ ಲಿಪಿ)'],
                           $rows['Example_in_MS_kannada_font (ಉದಾಹರಣೆ_ಮಸಂ_ಕನ್ನಡ ಲಿಪಿ)'],
                           $rows['Audio_of_example_in_MS (ಉದಾಹರಣೆ_ಆಡಿಯೊ_ಮಸಂ)'])); 
-   } echo $output;
+   } print_r($output);
 ?>
