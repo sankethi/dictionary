@@ -251,7 +251,7 @@ function getData()
 function getDictionaryData(filename)
 {
    firePhpRequest('Dictionary.php?q=' + filename,function(responseText)
-   {console.log(responseText);
+   {
      for(var eaIndex=0; eaIndex<Num_Alphabets; eaIndex++)
      {
 	if(responseText.charAt(1).startsWith(String.fromCharCode(97 + eaIndex))) { 
