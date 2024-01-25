@@ -1,4 +1,4 @@
-﻿const SERVER_IP = 'http://192.168.1.2/';
+﻿const SERVER_IP = 'http://192.168.31.12/';
 const SERVER_HOME = SERVER_IP + 'Sanketi Website/' ;
 const SERVER_DATA = SERVER_HOME + 'data/';
 const SERVER_DATA_IMAGES = SERVER_DATA + 'Images/';
@@ -251,7 +251,7 @@ function getData()
 function getDictionaryData(filename)
 {
    firePhpRequest('Dictionary.php?q=' + filename,function(responseText)
-   {
+   {console.log(responseText);
      for(var eaIndex=0; eaIndex<Num_Alphabets; eaIndex++)
      {
 	if(responseText.charAt(1).startsWith(String.fromCharCode(97 + eaIndex))) { 

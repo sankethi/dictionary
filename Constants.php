@@ -14,7 +14,7 @@ define("DOWNLOADS_FOLDER", "./Downloads/");
 define("AUDIO_BS_WORD", "6");
 define("AUDIO_BS_EXAMPLE", "23");
 
-$servername = "192.168.1.2";
+$servername = "192.168.31.12";
 $username = "root";
 $password = "";
 $dbname = "sanketi dictionary";
