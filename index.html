@@ -8,31 +8,16 @@
 
 <body>
 
-<h1>
-<?php
+<script>
+var xmlhttp = new XMLHttpRequest();
 
-$conn = new mysqli("192.168.31.12","root","","sanketi dictionary");
-     
-if ($conn -> connect_errno)
-{
-   echo "Failed to connect to MySQL: " . $conn -> connect_error;
-   exit();
-}
-$conn->set_charset("utf8"); 
-
-$sql = "select * from " . "y";
-$result = ($conn->query($sql));
-
-$row = []; 
-$output = []; 
-  
-if ($result->num_rows > 0) 
-{
-    $row = $result->fetch_all(MYSQLI_ASSOC);  
-}
-?>
-
-</h1>
+    xmlhttp.onload = function() {
+    if (this.readyState == 4 && this.status == 200) 
+       console.log(this.responseText);
+    };
+    xmlhttp.open('GET', 'Dictionary.php?q=y', true);
+    xmlhttp.send();
+</script>
 
 </body>
 
