@@ -1,4 +1,28 @@
-﻿const SERVER_IP = 'http://192.168.31.12/';
+﻿<?php
+
+$conn = new mysqli("192.168.31.12","root","","sanketi dictionary");
+     
+if ($conn -> connect_errno)
+{
+   echo "Failed to connect to MySQL: " . $conn -> connect_error;
+   exit();
+}
+$conn->set_charset("utf8"); 
+
+$sql = "select * from " . "y";
+$result = ($conn->query($sql));
+
+$row = []; 
+$output = []; 
+  
+if ($result->num_rows > 0) 
+{
+    $row = $result->fetch_all(MYSQLI_ASSOC);  
+}
+?>
+
+/*
+const SERVER_IP = 'http://192.168.31.12/';
 const SERVER_HOME = SERVER_IP + 'Sanketi Website/' ;
 const SERVER_DATA = SERVER_HOME + 'data/';
 const SERVER_DATA_IMAGES = SERVER_DATA + 'Images/';
@@ -1211,3 +1235,4 @@ function projectArchiveCallback()
    unloadAll(); 
    unfreezeMainWindow();
 }
+*/
